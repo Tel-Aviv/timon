@@ -1,0 +1,11 @@
+{
+  "presets": ["es2015", "flow", "react"],
+  "plugins": [
+    "relay",
+    "transform-object-rest-spread",
+    "transform-class-properties",
+    "transform-react-jsx-source",
+    "transform-function-bind",
+    "syntax-dynamic-import"
+  ]
+}
