@@ -36,6 +36,8 @@ const switchRoutes = (
   </Switch>
 );
 
+@withStyles(dashboardStyle)
+export default
 class Dashboard extends React.Component<Props, State> {
 
   state = {
@@ -77,5 +79,3 @@ class Dashboard extends React.Component<Props, State> {
   }
 
 }
-
-export default withStyles(dashboardStyle)(Dashboard);
