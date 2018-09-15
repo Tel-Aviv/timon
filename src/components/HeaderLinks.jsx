@@ -10,12 +10,8 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
 // @material-ui/icons
-import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
-import Dashboard from "@material-ui/icons/Dashboard";
-import Search from "@material-ui/icons/Search";
 // core components
-import CustomInput from "./CustomInput.jsx";
 import Button from "./Button.jsx";
 
 import headerLinksStyle from "../assets/jss/material-dashboard-react/components/headerLinksStyle";
@@ -41,34 +37,7 @@ class HeaderLinks extends React.Component {
     const { open } = this.state;
     return (
       <div>
-        <div className={classes.searchWrapper}>
-          <CustomInput
-            formControlProps={{
-              className: classes.margin + " " + classes.search
-            }}
-            inputProps={{
-              placeholder: "Search",
-              inputProps: {
-                "aria-label": "Search"
-              }
-            }}
-          />
-          <Button color="white" aria-label="edit" justIcon round>
-            <Search />
-          </Button>
-        </div>
-        <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-label="Dashboard"
-          className={classes.buttonLink}
-        >
-          <Dashboard className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Dashboard</p>
-          </Hidden>
-        </Button>
+
         <div className={classes.manager}>
           <Button
             buttonRef={node => {
@@ -117,31 +86,7 @@ class HeaderLinks extends React.Component {
                         onClick={this.handleClose}
                         className={classes.dropdownItem}
                       >
-                        Mike John responded to your email
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        You have 5 new tasks
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        You're now friend with Andrew
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Another Notification
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleClose}
-                        className={classes.dropdownItem}
-                      >
-                        Another One
+                        Pay attention to congestion at Region 1
                       </MenuItem>
                     </MenuList>
                   </ClickAwayListener>
@@ -150,18 +95,6 @@ class HeaderLinks extends React.Component {
             )}
           </Poppers>
         </div>
-        <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-label="Person"
-          className={classes.buttonLink}
-        >
-          <Person className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
-          </Hidden>
-        </Button>
       </div>
     );
   }
