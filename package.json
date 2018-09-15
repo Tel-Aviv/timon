@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "jest": {
+     "moduleFileExtensions": ["js", "jsx"],
+     "moduleDirectories": ["node_modules"],
+     "moduleNameMapper": {
+        "\\.(css|less)$": "identity-obj-proxy"
+      }
+  },
   "scripts": {
     "build": "webpack -d --watch",
     "test": "jest"

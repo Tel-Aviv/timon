@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 //import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
-//import dashboardRoutes from '../routes/dashboard.jsx';
+import dashboardRoutes from '../routes/dashboard.jsx';
 
 test('Sidebar link schanges the when hovered', () => {
   //

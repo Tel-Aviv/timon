@@ -78,3 +78,82 @@ exports[`Footer 1`] = `
   </div>
 </footer>
 `;
+
+exports[`Footer renders correctly 1`] = `
+<footer
+  className="Footer-footer-04"
+>
+  <div
+    className="Footer-container-05"
+  >
+    <div
+      className="Footer-left-02"
+    >
+      <ul
+        className="MuiList-root-09 MuiList-padding-010 Footer-list-07"
+      >
+        <li
+          className="MuiListItem-root-013 MuiListItem-default-016 MuiListItem-gutters-020 Footer-inlineBlock-08"
+          disabled={false}
+        >
+          <a
+            className="Footer-block-01"
+            href="#home"
+          >
+            Home
+          </a>
+        </li>
+        <li
+          className="MuiListItem-root-013 MuiListItem-default-016 MuiListItem-gutters-020 Footer-inlineBlock-08"
+          disabled={false}
+        >
+          <a
+            className="Footer-block-01"
+            href="#company"
+          >
+            Company
+          </a>
+        </li>
+        <li
+          className="MuiListItem-root-013 MuiListItem-default-016 MuiListItem-gutters-020 Footer-inlineBlock-08"
+          disabled={false}
+        >
+          <a
+            className="Footer-block-01"
+            href="#portfolio"
+          >
+            Portfolio
+          </a>
+        </li>
+        <li
+          className="MuiListItem-root-013 MuiListItem-default-016 MuiListItem-gutters-020 Footer-inlineBlock-08"
+          disabled={false}
+        >
+          <a
+            className="Footer-block-01"
+            href="#blog"
+          >
+            Blog
+          </a>
+        </li>
+      </ul>
+    </div>
+    <p
+      className="Footer-right-03"
+    >
+      <span>
+        © 
+        2018
+         
+        <a
+          className="Footer-a-06"
+          href="https://www.creative-tim.com"
+        >
+          Creative Tim
+        </a>
+        , made with love for a better web
+      </span>
+    </p>
+  </div>
+</footer>
+`;
