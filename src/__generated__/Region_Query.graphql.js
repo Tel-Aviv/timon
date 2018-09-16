@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3559ff11ac49dd2cb1f07a20117f83b4
+ * @relayHash becf3483360dbde91284d471d365bfe1
  */
 
 /* eslint-disable */
@@ -18,10 +18,21 @@ export type Region_QueryVariables = {|
 export type Region_QueryResponse = {|
   +region: ?{|
     +summaries: ?$ReadOnlyArray<{|
-      +id: string,
       +kind: SummaryKind,
       +value: number,
-    |}>
+    |}>,
+    +center: ?{|
+      +lat: ?number,
+      +lon: ?number,
+    |},
+    +cameras: ?$ReadOnlyArray<?{|
+      +objectId: ?number,
+      +name: string,
+      +location: {|
+        +lat: ?number,
+        +lon: ?number,
+      |},
+    |}>,
   |}
 |};
 export type Region_Query = {|
@@ -39,9 +50,22 @@ query Region_Query(
 ) {
   region(objectId: $regionId) {
     summaries(from: $from, till: $till) {
-      id
       kind
       value
+      id
+    }
+    center {
+      lat
+      lon
+    }
+    cameras {
+      objectId
+      name
+      location {
+        lat
+        lon
+      }
+      id
     }
     id
   }
@@ -77,58 +101,97 @@ v1 = [
     "type": "Int!"
   }
 ],
-v2 = {
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "from",
+    "variableName": "from",
+    "type": "Date!"
+  },
+  {
+    "kind": "Variable",
+    "name": "till",
+    "variableName": "till",
+    "type": "Date!"
+  }
+],
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "kind",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "value",
+  "args": null,
+  "storageKey": null
+},
+v5 = [
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "lat",
+    "args": null,
+    "storageKey": null
+  },
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "lon",
+    "args": null,
+    "storageKey": null
+  }
+],
+v6 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "center",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "GeoCenter",
+  "plural": false,
+  "selections": v5
+},
+v7 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "objectId",
+  "args": null,
+  "storageKey": null
+},
+v8 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v9 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "location",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "GeoCenter",
+  "plural": false,
+  "selections": v5
+},
+v10 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
-},
-v3 = {
-  "kind": "LinkedField",
-  "alias": null,
-  "name": "summaries",
-  "storageKey": null,
-  "args": [
-    {
-      "kind": "Variable",
-      "name": "from",
-      "variableName": "from",
-      "type": "Date!"
-    },
-    {
-      "kind": "Variable",
-      "name": "till",
-      "variableName": "till",
-      "type": "Date!"
-    }
-  ],
-  "concreteType": "Summary",
-  "plural": true,
-  "selections": [
-    v2,
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "kind",
-      "args": null,
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "value",
-      "args": null,
-      "storageKey": null
-    }
-  ]
 };
 return {
   "kind": "Request",
   "operationKind": "query",
   "name": "Region_Query",
   "id": null,
-  "text": "query Region_Query(\n  $regionId: Int!\n  $from: Date!\n  $till: Date!\n) {\n  region(objectId: $regionId) {\n    summaries(from: $from, till: $till) {\n      id\n      kind\n      value\n    }\n    id\n  }\n}\n",
+  "text": "query Region_Query(\n  $regionId: Int!\n  $from: Date!\n  $till: Date!\n) {\n  region(objectId: $regionId) {\n    summaries(from: $from, till: $till) {\n      kind\n      value\n      id\n    }\n    center {\n      lat\n      lon\n    }\n    cameras {\n      objectId\n      name\n      location {\n        lat\n        lon\n      }\n      id\n    }\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -146,7 +209,34 @@ return {
         "concreteType": "Region",
         "plural": false,
         "selections": [
-          v3
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "summaries",
+            "storageKey": null,
+            "args": v2,
+            "concreteType": "Summary",
+            "plural": true,
+            "selections": [
+              v3,
+              v4
+            ]
+          },
+          v6,
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "cameras",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Camera",
+            "plural": true,
+            "selections": [
+              v7,
+              v8,
+              v9
+            ]
+          }
         ]
       }
     ]
@@ -165,8 +255,37 @@ return {
         "concreteType": "Region",
         "plural": false,
         "selections": [
-          v3,
-          v2
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "summaries",
+            "storageKey": null,
+            "args": v2,
+            "concreteType": "Summary",
+            "plural": true,
+            "selections": [
+              v3,
+              v4,
+              v10
+            ]
+          },
+          v6,
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "cameras",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Camera",
+            "plural": true,
+            "selections": [
+              v7,
+              v8,
+              v9,
+              v10
+            ]
+          },
+          v10
         ]
       }
     ]
@@ -174,5 +293,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9cb0b157f83d6f25833b5b00ff1e98db';
+(node/*: any*/).hash = 'fe3bd721a2eb682163efbd13eadd7e8e';
 module.exports = node;

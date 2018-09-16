@@ -2,11 +2,14 @@
 // flow
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay';
+import classNames from 'classnames';
 // @material-ui/core
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
+import Store from "@material-ui/icons/Store";
 import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
+import Accessibility from "@material-ui/icons/Accessibility";
 // core components
 import GridItem from "./components/GridItem.jsx";
 import GridContainer from "./components/GridContainer.jsx";
@@ -25,17 +28,25 @@ class RegionSummary extends React.Component<Props> {
 
   render() {
 
-    const { classes, ...rest } = this.props;
+    const { classes, kind, ...rest } = this.props;
 
-    return <GridItem xs={12} sm={6} md={3}>
+    const iconColor = classNames({
+      "warning": kind === 'IN',
+      "info": kind === 'OUT',
+      "rose": kind === 'CROSS',
+      "success": kind === "PASSENGERS"
+    });
+
+    return (
+      <GridItem xs={12} sm={6} md={3}>
         <Card>
-          <CardHeader color="warning" stats icon>
-            <CardIcon color="warning">
-              <Icon>content_copy</Icon>
+          <CardHeader color={iconColor} stats icon>
+            <CardIcon color={iconColor} >
+              <Icon>info_outline</Icon>
             </CardIcon>
             <p className={classes.cardCategory}>{this.props.kind}</p>
             <h3 className={classes.cardTitle}>
-              {this.props.value} <small>Hundreds  </small>
+              {this.props.value} <small>Hundreds </small>
             </h3>
           </CardHeader>
           <CardFooter stats>
@@ -48,6 +59,7 @@ class RegionSummary extends React.Component<Props> {
           </CardFooter>
         </Card>
       </GridItem>
+    );
   }
 };
 

@@ -1,33 +1,58 @@
-  interface INode  {
-    id: ID!
-  }
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
 
-  scalar Date
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
 
-  enum SummaryKind {
-    IN,
-    OUT,
-    CROSS,
-    PASSENGERS
-  }
+type Camera implements INode {
+  id: ID!
+  objectId: Int
+  name: String!
+  location: GeoCenter!
+}
 
-  type Summary implements INode {
-    id: ID!
+scalar Date
 
-    kind: SummaryKind!
-    value: Int!
-  }
+type GeoCenter {
+  lat: Float
+  lon: Float
+}
 
-  type Region implements INode{
+interface INode {
+  id: ID!
+}
 
-    id: ID!
+type Query {
+  region(objectId: Int!): Region
+}
 
-    objectId: Int,
-    name: String,
-    summary(from: Date!, till: Date!, kind: SummaryKind!): Summary,
-    summaries(from: Date!, till: Date!): [Summary!]
-  }
+type Region implements INode {
+  id: ID!
+  center: GeoCenter
+  cameras: [Camera]
+  objectId: Int
+  name: String
+  summary(from: Date!, till: Date!, kind: SummaryKind!): Summary
+  summaries(from: Date!, till: Date!): [Summary!]
+}
 
-  type Query {
-    region(objectId: Int!): Region,
-  }
+type Summary implements INode {
+  id: ID!
+  kind: SummaryKind!
+  value: Int!
+}
+
+enum SummaryKind {
+  IN
+  OUT
+  CROSS
+  PASSENGERS
+}
+
+"""
+The `Upload` scalar type represents a file upload promise that resolves an
+object containing `stream`, `filename`, `mimetype` and `encoding`.
+"""
+scalar Upload
+

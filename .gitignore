@@ -1,4 +1,5 @@
 node_modules/
 public/*.js
 public/img
+src/__generated__
 .DS_Store

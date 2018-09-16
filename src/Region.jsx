@@ -2,6 +2,7 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ChartistGraph from "react-chartist";
+import moment from 'moment';
 
 import { QueryRenderer, graphql } from 'react-relay';
 import environment from './Environment';
@@ -51,9 +52,20 @@ const summariesQuery = graphql`
                       $till: Date!) {
     region(objectId: $regionId ) {
       summaries(from: $from, till: $till) {
-        id
         kind
         value
+      }
+      center {
+        lat
+        lon
+      }
+      cameras {
+        objectId
+        name
+        location {
+          lat
+          lon
+        }
       }
     }
   }
@@ -72,6 +84,12 @@ class Region extends React.Component<Props, State> {
                   </div>
               </main>)
     } else if( props) {
+
+      const tableData = [];
+      props.region.cameras.map( (camera, index) => {
+        tableData.push( [ camera.objectId, camera.name,  "Curaçao" , "Sinaai-Waas" , "$23,789"] )
+      })
+
       return (<React.Fragment>
                 <GridContainer>
                   {
@@ -83,10 +101,23 @@ class Region extends React.Component<Props, State> {
                   })
                 }
                 </GridContainer>
+                <GridContainer>
+                    <GridItem xs={12} sm={12} md={6}>
+                        <Table tableHeaderColor="primary"
+                              tableHead={['ID', 'Name','Country','City','Salary']}
+                              tableData={tableData}
+                          />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <Maps center={props.region.center}
+                            cameras={props.region.cameras}/>
+                    </GridItem>
+                </GridContainer>
+
             </React.Fragment>);
     }
 
-    return <div>Loading...</div>;
+    return (<div>Loading...</div>);
   }
 
   render() {
@@ -95,14 +126,15 @@ class Region extends React.Component<Props, State> {
 
     const queryVariables = {
       regionId: parseInt(this.props.match.params.regionid, 10),
-      from: '09/09/2018',
-      till: '09/10/2018'
+      from: moment().format('DD/MM/YYYY'),
+      till: moment().format('DD/MM/YYYY')
     };
 
     const summariesKinds = [1,2,3,4];
     const distributions = [1,2,,3];
 
-    return <div>{queryVariables.regionId}
+    return (<div>
+      {queryVariables.regionId}
       {/*
       <GridContainer>
       {
@@ -118,24 +150,6 @@ class Region extends React.Component<Props, State> {
           })
         }
       </GridContainer>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
-          <Table tableHeaderColor="primary"
-            tableHead={['Name','Country','City','Salary']}
-                tableData={[
-        [ "Dakota Rice" , "Niger" , "Oud-Turnhout" , "$36,738" ] ,
-        [ "Minerva Hooper" , "Curaçao" , "Sinaai-Waas" , "$23,789" ] ,
-        [ "Sage Rodriguez" , "Netherlands" , "Baileux" , "$56,142" ] ,
-        [ "Philip Chaney" , "Korea, South" , "Overland Park" , "$38,735" ] ,
-        [ "Doris Greene" , "Malawi" , "Feldkirchen in Kärnten" , "$63,542" ] ,
-        [ "Mason Porter" , "Chile" , "Gloucester" , "$78,615" ]
-    ]}
-            />
-        </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
-          <Maps />
-        </GridItem>
-      </GridContainer>
       */}
       <QueryRenderer
         environment={environment}
@@ -143,7 +157,7 @@ class Region extends React.Component<Props, State> {
         variables={queryVariables}
         render={::this.renderRegion}
         />
-    </div>
+    </div>)
   }
 
 };

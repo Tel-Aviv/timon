@@ -7,10 +7,24 @@ import {
 } from "react-google-maps";
 
 const CustomSkinMap = withScriptjs(
-  withGoogleMap(props => (
-    <GoogleMap
+  withGoogleMap(props => {
+
+    //console.log(props.cameras);
+    const cameraMarkers = props.cameras.map( (camera, index) => {
+      return <Marker position={{
+                          lat: camera.location.lat,
+                          lng: camera.location.lon
+                        }}
+                     key={index}
+        />
+    })
+
+    return (<GoogleMap
       defaultZoom={13}
-      defaultCenter={{ lat: 32.066667, lng: 34.783333 }}
+      defaultCenter={{
+                        lat: props.center.lat,
+                        lng: props.center.lon
+                       }}
       defaultOptions={{
         scrollwheel: false,
         zoomControl: true,
@@ -76,14 +90,17 @@ const CustomSkinMap = withScriptjs(
         ]
       }}
     >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
-    </GoogleMap>
-  ))
+      {cameraMarkers}
+    </GoogleMap>)
+  })
 );
 
-function Maps({ ...props }) {
+const Maps = ({ ...props}) => {
+
   return (
     <CustomSkinMap
+      center={props.center}
+      cameras={props.cameras}
       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDquW_Bmru-uQ1e8PAj9ogpL8SC4BxSTgI"
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={{ height: `100vh` }} />}
