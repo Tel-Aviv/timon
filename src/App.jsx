@@ -1,14 +1,31 @@
 // flow
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Dashboard from './Dashboard';
 
- const App = (props) => {
+import MainLayout from './MainLayout.jsx';
 
-   return <Switch>
-      <Route path='/' component={Dashboard} />
-   </Switch>
+import image from "./assets/img/sidebar-2.jpg";
+import logo from "./assets/img/reactlogo.png";
+
+type State = {
+  mobileOpen: boolean
+}
+
+type Props = {
+  classes: {
+    wrapper: {},
+    mainPanel: {},
+    content: {}
+  }
+}
+
+export default
+class App extends React.Component<Props, State> {
+
+  render() {
+    return <Switch>
+      <Route path='/' component={MainLayout} />
+    </Switch>
+  }
 
  }
-
- export default App;

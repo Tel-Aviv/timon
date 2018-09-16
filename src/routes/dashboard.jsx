@@ -18,8 +18,8 @@ import UserProfile from "../views/UserProfile/UserProfile.jsx";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
+    sidebarName: "Home",
+    navbarName: "Home",
     icon: Dashboard,
     component: DashboardPage
   },
@@ -31,16 +31,16 @@ const dashboardRoutes = [
     component: UserProfile
   },
   {
-    path: "/table",
+    path: "/region/1",
     sidebarName: "Region 1",
-    navbarName: "Table List",
-    icon: "content_paste",
+    navbarName: "Region 1",
+    icon: LocationOn,
     component: TableList
   },
   {
-    path: "/icons",
+    path: '/region/2',
     sidebarName: "Region 2",
-    navbarName: "Icons",
+    navbarName: "Region 2",
     icon: BubbleChart,
     component: Icons
   },
@@ -58,7 +58,10 @@ const dashboardRoutes = [
     icon: Notifications,
     component: NotificationsPage
   },
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
+  { redirect: true,
+    path: "/",
+    to: "/dashboard",
+    navbarName: "Home" }
 ];
 
 export default dashboardRoutes;
