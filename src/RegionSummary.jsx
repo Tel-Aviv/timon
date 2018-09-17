@@ -52,9 +52,11 @@ class RegionSummary extends React.Component<Props> {
           <CardFooter stats>
             <div className={classes.stats}>
               <DateRange />
-              <a href="#pablo" onClick={e => e.preventDefault()}>
-                Get more space
-              </a>
+              <span style={{
+                  lineHeight: '2.2'
+                }}>
+              7 cameras considered
+              </span>
             </div>
           </CardFooter>
         </Card>

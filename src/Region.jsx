@@ -87,7 +87,12 @@ class Region extends React.Component<Props, State> {
 
       const tableData = [];
       props.region.cameras.map( (camera, index) => {
-        tableData.push( [ camera.objectId, camera.name,  "Curaçao" , "Sinaai-Waas" , "$23,789"] )
+        tableData.push( [ camera.objectId.toString(),
+                          camera.name,
+                          "Curaçao" ,
+                          "Sinaai-Waas" ,
+                          "$23,789"
+                        ])
       })
 
       return (<React.Fragment>
@@ -95,9 +100,9 @@ class Region extends React.Component<Props, State> {
                   {
                    summariesKinds.map( (kind, index) => {
                    return <RegionSummary classes={this.props.classes}
-                                          kind={props.region.summaries[index].kind}
-                                          value={props.region.summaries[index].value}
-                                          key={index} />
+                                         kind={props.region.summaries[index].kind}
+                                         value={props.region.summaries[index].value}
+                                        key={index} />
                   })
                 }
                 </GridContainer>
@@ -143,6 +148,8 @@ class Region extends React.Component<Props, State> {
           })
       }
       </GridContainer>
+            */}
+
       <GridContainer>
         {
           distributions.map( (d, index) => {
@@ -150,7 +157,6 @@ class Region extends React.Component<Props, State> {
           })
         }
       </GridContainer>
-      */}
       <QueryRenderer
         environment={environment}
         query={summariesQuery}
