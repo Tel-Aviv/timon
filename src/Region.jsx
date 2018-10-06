@@ -60,11 +60,20 @@ const summariesQuery = graphql`
         value
       }
 
+      hourlyDistribution(date: $till) {
+        labels
+        values
+      }
+
+      vehicleTypeDistribution(date: $till) {
+        labels
+        values
+      }
+
       dayOfWeekDisrtibution(from: $weekFrom, till: $till){
         labels
         values
 		  }
-
 
       ins: clusterDistribution(
         direction: $directionIn
@@ -120,20 +129,59 @@ class Region extends React.Component<Props, State> {
     };
     const chartType = 'Bar';
     const chartTille = 'Weekly Distribution';
+    const color = 'success';
 
     return (
         <RegionChart classes={classes}
                       type={chartType}
                       data={chartData}
-                      title={chartTille} />
+                      title={chartTille}
+                      color={color} />
             );
 
   }
 
   renderHourlyDistributionChart(data) {
+
+    const {classes, ...rest } = this.props;
+    const chartData = {
+      series: data[0].values,
+      labels: data[0].labels
+    };
+
+    const chartType = 'Bar';
     const chartTille = 'Hourly Distribution';
-    // return <div>{chartTille}</div>
-    return <div></div>
+    const success = 'warning';
+
+    return (
+        <RegionChart classes={classes}
+                      type={chartType}
+                      data={chartData}
+                      title={chartTille}
+                      color={success}  />
+            );
+  }
+
+  renderVehicleTypeDistributionChart(data) {
+
+    const {classes, ...rest } = this.props;
+    const chartData = {
+      series: data.values,
+      labels: data.labels
+    };
+
+    const chartType = 'Pie';
+    const chartTille = 'Vehicle Types';
+    const success = 'danger';
+
+    return (
+        <RegionChart classes={classes}
+                      type={chartType}
+                      data={chartData}
+                      title={chartTille}
+                      color={success}  />
+            );
+
   }
 
   renderRegion( {error, props} ) {
@@ -173,7 +221,7 @@ class Region extends React.Component<Props, State> {
                             ])
       });
 
-      const distributions = [1, 2];
+      const distributions = [1];
       const {classes, ...rest } = this.props;
 
       return (<React.Fragment>
@@ -188,24 +236,9 @@ class Region extends React.Component<Props, State> {
                 }
                 </GridContainer>
                 <GridContainer>
-
                   {::this.renderWeeklyDistributionChart(props.region.dayOfWeekDisrtibution)}
-                  {::this.renderHourlyDistributionChart()}
-                  {
-                    distributions.map( (d, index) => {
-
-                      const chartData = {
-                        series: props.region.dayOfWeekDisrtibution.values,
-                        labels: props.region.dayOfWeekDisrtibution.labels
-                      };
-                      const chartType = 'Bar';
-
-                      return <RegionChart classes={classes}
-                                type={chartType}
-                                data={chartData}
-                                key={index} />
-                    })
-                  }
+                  {::this.renderHourlyDistributionChart(props.region.hourlyDistribution)}
+                  {::this.renderVehicleTypeDistributionChart(props.region.vehicleTypeDistribution)}
                 </GridContainer>
 
                 <GridContainer>

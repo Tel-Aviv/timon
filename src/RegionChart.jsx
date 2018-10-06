@@ -7,11 +7,11 @@ import Card from "./components/Card.jsx";
 import CardHeader from "./components/CardHeader.jsx";
 import CardBody from "./components/CardBody.jsx";
 
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "./variables/charts";
+// import {
+//   dailySalesChart,
+//   emailsSubscriptionChart,
+//   completedTasksChart
+// } from "./variables/charts";
 
 type Props = {
   classes : {
@@ -27,16 +27,14 @@ class RegionChart extends React.Component<Props> {
 
   render() {
 
-    const {classes, type, data, title, ...rest} = this.props;
+    const {classes, type, data, title, color, ...rest} = this.props;
 
     return (<GridItem xs={12} sm={12} md={4}>
       <Card chart>
-        <CardHeader color="success">
+        <CardHeader color={color}>
           <ChartistGraph
             className="ct-chart"
             data={data}
-            options={dailySalesChart.options}
-            listener={dailySalesChart.animation}
             type={type}
             />
         </CardHeader>
