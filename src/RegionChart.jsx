@@ -26,7 +26,7 @@ class RegionChart extends React.Component<Props> {
 
     const {classes, ...rest} = this.props;
 
-    return <GridItem xs={12} sm={12} md={4}>
+    return (<GridItem xs={12} sm={12} md={4}>
       <Card chart>
         <CardHeader color="success">
           <ChartistGraph
@@ -44,7 +44,7 @@ class RegionChart extends React.Component<Props> {
 
         </CardBody>
       </Card>
-    </GridItem>
+    </GridItem>)
   }
 }
 

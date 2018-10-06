@@ -23,9 +23,9 @@ export default
 class App extends React.Component<Props, State> {
 
   render() {
-    return <Switch>
+    return (<Switch>
       <Route path='/' component={MainLayout} />
-    </Switch>
+    </Switch>)
   }
 
  }

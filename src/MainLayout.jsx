@@ -1,6 +1,9 @@
 // @flow
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { QueryRenderer, graphql } from 'react-relay';
+import environment from './Environment';
+
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Sidebar from './components/Sidebar';
@@ -26,6 +29,15 @@ type Props = {
   }
 }
 
+const regionsQuery = graphql`
+  query MainLayout_Query {
+    regions{
+      id
+      name
+    }
+  }
+`;
+
 @withStyles(dashboardStyle)
 class MainLayout extends React.Component<Props, State> {
 
@@ -37,11 +49,30 @@ class MainLayout extends React.Component<Props, State> {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
 
+  renderSidebar = ({error, props}) => {
+    if( props ) {
+      // return (<div>
+      //           {
+      //             props.regions.map( (region) => {
+      //               return region.name
+      //             })
+      //           }
+      //         <div>)
+    }
+
+    return (<div>Loading Sidebar...</div>);
+  }
+
   render() {
     const {classes, ...rest } = this.props;
 
     return (
     <div className={classes.wrapper}>
+        <QueryRenderer
+          environment={environment}
+          query={regionsQuery}
+          render={::this.renderSidebar}
+        />
         <Sidebar
          routes={dashboardRoutes}
          logoText={'TLV'}

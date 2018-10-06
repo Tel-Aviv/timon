@@ -7,12 +7,27 @@ enum CacheControlScope {
 
 type Camera implements INode {
   id: ID!
-  objectId: Int
+  cameraId: Int
   name: String!
   location: GeoCenter!
 }
 
 scalar Date
+
+enum Direction {
+  IN
+  OUT
+}
+
+type Gate implements INode {
+  id: ID!
+  cameraName: String
+  Total: Int
+  SouthCluster: Int
+  NorthCluster: Int
+  EastCluster: Int
+  WestCluster: Int
+}
 
 type GeoCenter {
   lat: Float
@@ -24,17 +39,27 @@ interface INode {
 }
 
 type Query {
-  region(objectId: Int!): Region
+  region(regionId: Int!): Region
+  regions: [Region]
 }
 
 type Region implements INode {
   id: ID!
+  regionId: Int
   center: GeoCenter
   cameras: [Camera]
-  objectId: Int
   name: String
   summary(from: Date!, till: Date!, kind: SummaryKind!): Summary
   summaries(from: Date!, till: Date!): [Summary!]
+  disrtibution(from: Date!, till: Date!): Serie
+  frequencyDistribution(from: Date!, till: Date!): Serie
+  lagsDistribution(from: Date!, till: Date!): Serie
+  clusterDistribution(direction: Direction!, from: Date!, till: Date!): [Gate]
+}
+
+type Serie {
+  labels: [String]
+  values: [[Int]]
 }
 
 type Summary implements INode {

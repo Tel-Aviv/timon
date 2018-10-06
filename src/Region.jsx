@@ -48,19 +48,50 @@ type State = {
 
 const summariesQuery = graphql`
   query Region_Query ($regionId: Int!,
+                      $directionIn: Direction!,
+                      $directionOut: Direction!,
                       $from: Date!,
                       $till: Date!) {
-    region(objectId: $regionId ) {
+    region(regionId: $regionId ) {
+
       summaries(from: $from, till: $till) {
         kind
         value
       }
+
+      ins: clusterDistribution(
+        direction: $directionIn
+        from: $from
+        till: $till
+      ) {
+        cameraName
+        Total
+        NorthCluster
+        SouthCluster
+        EastCluster
+        WestCluster
+      }
+
+      outs: clusterDistribution(
+        direction: $directionOut
+        from: $from
+        till: $till
+      ) {
+        cameraName
+        Total
+        NorthCluster
+        SouthCluster
+        EastCluster
+        WestCluster
+      }
+
+
       center {
         lat
         lon
       }
       cameras {
-        objectId
+        cameraId
         name
         location {
           lat
@@ -85,15 +116,30 @@ class Region extends React.Component<Props, State> {
               </main>)
     } else if( props) {
 
-      const tableData = [];
-      props.region.cameras.map( (camera, index) => {
-        tableData.push( [ camera.objectId.toString(),
-                          camera.name,
-                          "Curaçao" ,
-                          "Sinaai-Waas" ,
-                          "$23,789"
-                        ])
-      })
+      const tableDataIns = [];
+      const tableDataOuts = [];
+
+      props.region.ins.map( cluster => {
+        tableDataIns.push([
+                            cluster.cameraName,
+                            cluster.Total.toString(),
+                            cluster.NorthCluster.toString(),
+                            cluster.SouthCluster.toString(),
+                            cluster.EastCluster.toString(),
+                            cluster.WestCluster.toString()
+                          ])
+      });
+
+      props.region.outs.map( cluster => {
+          tableDataOuts.push([
+                              cluster.cameraName,
+                              cluster.Total.toString(),
+                              cluster.NorthCluster.toString(),
+                              cluster.SouthCluster.toString(),
+                              cluster.EastCluster.toString(),
+                              cluster.WestCluster.toString()
+                            ])
+      });
 
       return (<React.Fragment>
                 <GridContainer>
@@ -108,10 +154,17 @@ class Region extends React.Component<Props, State> {
                 </GridContainer>
                 <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
+                        <div style={{textAlign: 'center'}}>Entrances</div>
                         <Table tableHeaderColor="primary"
-                              tableHead={['ID', 'Name','Country','City','Salary']}
-                              tableData={tableData}
+                              tableHead={['ID', 'Total','North','South','East', 'West']}
+                              tableData={tableDataIns}
                           />
+                        <br />
+                        <div style={{textAlign: 'center'}}>Exits</div>
+                        <Table tableHeaderColor="primary"
+                          tableHead={['ID', 'Total','North','South','East', 'West']}
+                          tableData={tableDataOuts}
+                        />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <Maps center={props.region.center}
@@ -130,13 +183,15 @@ class Region extends React.Component<Props, State> {
     const {classes, ...rest } = this.props;
 
     const queryVariables = {
+      directionIn: 'IN',
+      directionOut: 'OUT',
       regionId: parseInt(this.props.match.params.regionid, 10),
-      from: moment().format('DD/MM/YYYY'),
-      till: moment().format('DD/MM/YYYY')
+      from: '24/09/2018', //moment().format('DD/MM/YYYY'),
+      till: '25/09/2018'
     };
 
     const summariesKinds = [1,2,3,4];
-    const distributions = [1,2,,3];
+    const distributions = [1,2,3];
 
     return (<div>
       {queryVariables.regionId}
