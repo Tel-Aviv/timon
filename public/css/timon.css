@@ -4,3 +4,12 @@ body {
     font-weight: 300;
     line-height: 1.5em;
 }
+
+.ct-series-a .ct-bar {
+  /* Set the colour of this series line */
+  stroke: white;
+  /* Control the thikness of your lines */
+  stroke-width: 5px;
+  /* Create a dashed line with a pattern */
+  /* stroke-dasharray: 10px 20px; */
+}

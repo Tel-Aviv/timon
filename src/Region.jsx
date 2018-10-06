@@ -111,6 +111,31 @@ const summariesQuery = graphql`
 
 class Region extends React.Component<Props, State> {
 
+  renderWeeklyDistributionChart(data) {
+
+    const {classes, ...rest } = this.props;
+    const chartData = {
+      series: data.values,
+      labels: data.labels
+    };
+    const chartType = 'Bar';
+    const chartTille = 'Weekly Distribution';
+
+    return (
+        <RegionChart classes={classes}
+                      type={chartType}
+                      data={chartData}
+                      title={chartTille} />
+            );
+
+  }
+
+  renderHourlyDistributionChart(data) {
+    const chartTille = 'Hourly Distribution';
+    // return <div>{chartTille}</div>
+    return <div></div>
+  }
+
   renderRegion( {error, props} ) {
 
     const summariesKinds = [1,2,3,4];
@@ -148,6 +173,9 @@ class Region extends React.Component<Props, State> {
                             ])
       });
 
+      const distributions = [1, 2];
+      const {classes, ...rest } = this.props;
+
       return (<React.Fragment>
                 <GridContainer>
                   {
@@ -159,6 +187,27 @@ class Region extends React.Component<Props, State> {
                   })
                 }
                 </GridContainer>
+                <GridContainer>
+
+                  {::this.renderWeeklyDistributionChart(props.region.dayOfWeekDisrtibution)}
+                  {::this.renderHourlyDistributionChart()}
+                  {
+                    distributions.map( (d, index) => {
+
+                      const chartData = {
+                        series: props.region.dayOfWeekDisrtibution.values,
+                        labels: props.region.dayOfWeekDisrtibution.labels
+                      };
+                      const chartType = 'Bar';
+
+                      return <RegionChart classes={classes}
+                                type={chartType}
+                                data={chartData}
+                                key={index} />
+                    })
+                  }
+                </GridContainer>
+
                 <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
                         <Card>
@@ -209,27 +258,8 @@ class Region extends React.Component<Props, State> {
       till: '25/09/2018'
     };
 
-    const summariesKinds = [1,2,3,4];
-    const distributions = [1,2,3];
-
     return (<div>
-      {/*
-      <GridContainer>
-      {
-          summariesKinds.map( (kind, index) => {
-            return <RegionSummary classes={classes} key={index} kind={kind} />
-          })
-      }
-      </GridContainer>
-            */}
 
-      <GridContainer>
-        {
-          distributions.map( (d, index) => {
-            return <RegionChart classes={classes} key={index} />
-          })
-        }
-      </GridContainer>
       <QueryRenderer
         environment={environment}
         query={summariesQuery}

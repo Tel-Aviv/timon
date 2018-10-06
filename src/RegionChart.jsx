@@ -17,31 +17,33 @@ type Props = {
   classes : {
     cardTitle: {},
     cardCategory: {}
-  }
+  },
+  type: string,
+  data: [],
+  title: string
 }
 
 class RegionChart extends React.Component<Props> {
 
   render() {
 
-    const {classes, ...rest} = this.props;
+    const {classes, type, data, title, ...rest} = this.props;
 
     return (<GridItem xs={12} sm={12} md={4}>
       <Card chart>
         <CardHeader color="success">
           <ChartistGraph
             className="ct-chart"
-            data={dailySalesChart.data}
+            data={data}
             options={dailySalesChart.options}
             listener={dailySalesChart.animation}
-            type="Line"
+            type={type}
             />
         </CardHeader>
         <CardBody>
-            <h4 className={classes.cardTitle}>Daily Sales</h4>
+            <h4 className={classes.cardTitle}>{title}</h4>
             <p className={classes.cardCategory}>
             </p>
-
         </CardBody>
       </Card>
     </GridItem>)
