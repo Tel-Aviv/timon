@@ -75,7 +75,7 @@ class MainLayout extends React.Component<Props, State> {
         />
         <Sidebar
          routes={dashboardRoutes}
-         logoText={'TLV'}
+         logoText={'Traffic Monitor'}
          logo={logo}
          image={image}
          minActive={true}

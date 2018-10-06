@@ -18,17 +18,10 @@ import UserProfile from "../views/UserProfile/UserProfile.jsx";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    sidebarName: "Home",
-    navbarName: "Home",
+    sidebarName: "City",
+    navbarName: "City",
     icon: Dashboard,
     component: DashboardPage
-  },
-  {
-    path: "/user",
-    sidebarName: "User Profile",
-    navbarName: "Profile",
-    icon: Person,
-    component: UserProfile
   },
   {
     path: "/region/1",
@@ -45,23 +38,16 @@ const dashboardRoutes = [
     component: Icons
   },
   {
-    path: "/maps",
-    sidebarName: "Maps",
-    navbarName: "Map",
+    path: "/cameras",
+    sidebarName: "Cameras",
+    navbarName: "Cameras",
     icon: LocationOn,
     component: Maps
-  },
-  {
-    path: "/notifications",
-    sidebarName: "Notifications",
-    navbarName: "Notifications",
-    icon: Notifications,
-    component: NotificationsPage
   },
   { redirect: true,
     path: "/",
     to: "/dashboard",
-    navbarName: "Home" }
+    navbarName: "City" }
 ];
 
 export default dashboardRoutes;

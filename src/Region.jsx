@@ -50,6 +50,7 @@ const summariesQuery = graphql`
   query Region_Query ($regionId: Int!,
                       $directionIn: Direction!,
                       $directionOut: Direction!,
+                      $weekFrom: Date!,
                       $from: Date!,
                       $till: Date!) {
     region(regionId: $regionId ) {
@@ -58,6 +59,12 @@ const summariesQuery = graphql`
         kind
         value
       }
+
+      dayOfWeekDisrtibution(from: $weekFrom, till: $till){
+        labels
+        values
+		  }
+
 
       ins: clusterDistribution(
         direction: $directionIn
@@ -119,25 +126,25 @@ class Region extends React.Component<Props, State> {
       const tableDataIns = [];
       const tableDataOuts = [];
 
-      props.region.ins.map( cluster => {
+      props.region.ins.map( gate => {
         tableDataIns.push([
-                            cluster.cameraName,
-                            cluster.Total.toString(),
-                            cluster.NorthCluster.toString(),
-                            cluster.SouthCluster.toString(),
-                            cluster.EastCluster.toString(),
-                            cluster.WestCluster.toString()
+                            gate.cameraName,
+                            gate.Total.toString(),
+                            gate.NorthCluster.toString(),
+                            gate.SouthCluster.toString(),
+                            gate.EastCluster.toString(),
+                            gate.WestCluster.toString()
                           ])
       });
 
-      props.region.outs.map( cluster => {
+      props.region.outs.map( gate => {
           tableDataOuts.push([
-                              cluster.cameraName,
-                              cluster.Total.toString(),
-                              cluster.NorthCluster.toString(),
-                              cluster.SouthCluster.toString(),
-                              cluster.EastCluster.toString(),
-                              cluster.WestCluster.toString()
+                              gate.cameraName,
+                              gate.Total.toString(),
+                              gate.NorthCluster.toString(),
+                              gate.SouthCluster.toString(),
+                              gate.EastCluster.toString(),
+                              gate.WestCluster.toString()
                             ])
       });
 
@@ -154,17 +161,28 @@ class Region extends React.Component<Props, State> {
                 </GridContainer>
                 <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
-                        <div style={{textAlign: 'center'}}>Entrances</div>
-                        <Table tableHeaderColor="primary"
-                              tableHead={['ID', 'Total','North','South','East', 'West']}
+                        <Card>
+                          <CardHeader color="primary">
+                            <div style={{textAlign: 'center'}}>Entrances</div>
+                          </CardHeader>
+                          <CardBody>
+                          <Table tableHeaderColor="primary"
+                              tableHead={['Gate', 'Total','North','South','East', 'West']}
                               tableData={tableDataIns}
                           />
-                        <br />
-                        <div style={{textAlign: 'center'}}>Exits</div>
-                        <Table tableHeaderColor="primary"
-                          tableHead={['ID', 'Total','North','South','East', 'West']}
-                          tableData={tableDataOuts}
-                        />
+                      </CardBody>
+                      </Card>
+                      <Card>
+                        <CardHeader color="primary">
+                          <div style={{textAlign: 'center'}}>Exits</div>
+                        </CardHeader>
+                        <CardBody>
+                          <Table tableHeaderColor="primary"
+                            tableHead={['Gate', 'Total','North','South','East', 'West']}
+                            tableData={tableDataOuts}
+                          />
+                        </CardBody>
+                    </Card>
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <Maps center={props.region.center}
@@ -186,6 +204,7 @@ class Region extends React.Component<Props, State> {
       directionIn: 'IN',
       directionOut: 'OUT',
       regionId: parseInt(this.props.match.params.regionid, 10),
+      weekFrom: '18/09/2018',
       from: '24/09/2018', //moment().format('DD/MM/YYYY'),
       till: '25/09/2018'
     };
@@ -194,7 +213,6 @@ class Region extends React.Component<Props, State> {
     const distributions = [1,2,3];
 
     return (<div>
-      {queryVariables.regionId}
       {/*
       <GridContainer>
       {
