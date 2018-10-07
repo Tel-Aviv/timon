@@ -35,6 +35,10 @@ var config = {
         loader: 'json-loader'
       },
       {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
         test: /\.(eot|svc|ttf|woff|woff2)$/,
         loader: 'file-loader?name=fonts/[name].[ext]'
       },

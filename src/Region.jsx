@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ChartistGraph from "react-chartist";
 import moment from 'moment';
@@ -75,7 +76,7 @@ const summariesQuery = graphql`
         values
 		  }
 
-      ins: clusterDistribution(
+      ins: intersectionDistribution(
         direction: $directionIn
         from: $from
         till: $till
@@ -88,7 +89,7 @@ const summariesQuery = graphql`
         WestCluster
       }
 
-      outs: clusterDistribution(
+      outs: intersectionDistribution(
         direction: $directionOut
         from: $from
         till: $till
@@ -101,11 +102,11 @@ const summariesQuery = graphql`
         WestCluster
       }
 
-
       center {
         lat
         lon
       }
+
       cameras {
         cameraId
         name
@@ -231,7 +232,7 @@ class Region extends React.Component<Props, State> {
                    return <RegionSummary classes={this.props.classes}
                                          kind={props.region.summaries[index].kind}
                                          value={props.region.summaries[index].value}
-                                        key={index} />
+                                         key={index} />
                   })
                 }
                 </GridContainer>
@@ -248,11 +249,11 @@ class Region extends React.Component<Props, State> {
                             <div style={{textAlign: 'center'}}>Entrances</div>
                           </CardHeader>
                           <CardBody>
-                          <Table tableHeaderColor="primary"
-                              tableHead={['Gate', 'Total','North','South','East', 'West']}
-                              tableData={tableDataIns}
-                          />
-                      </CardBody>
+                            <Table tableHeaderColor="primary"
+                                tableHead={['Gate', 'Total','North','South','East', 'West']}
+                                tableData={tableDataIns}
+                            />
+                          </CardBody>
                       </Card>
                       <Card>
                         <CardHeader color="primary">
@@ -291,7 +292,7 @@ class Region extends React.Component<Props, State> {
       till: '25/09/2018'
     };
 
-    return (<div>
+    return (<React.Fragment>
 
       <QueryRenderer
         environment={environment}
@@ -299,10 +300,16 @@ class Region extends React.Component<Props, State> {
         variables={queryVariables}
         render={::this.renderRegion}
         />
-    </div>)
+    </React.Fragment>)
   }
 
 };
 
+const mapStateToProps = state => {
+  return {
+    fromDate: state.fromDate,
+    tillDate: state.tillDate
+  }
+}
 
-export default withStyles(dashboardStyle)(Region);
+export default withStyles(dashboardStyle)(connect(mapStateToProps)(Region));

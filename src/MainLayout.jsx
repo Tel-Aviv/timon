@@ -10,6 +10,7 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Region from './Region';
+import Dashboard from './Dashboard';
 
 import dashboardStyle from "./assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 import dashboardRoutes from './routes/dashboard.jsx';
@@ -49,30 +50,32 @@ class MainLayout extends React.Component<Props, State> {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
 
-  renderSidebar = ({error, props}) => {
-    if( props ) {
-      // return (<div>
-      //           {
-      //             props.regions.map( (region) => {
-      //               return region.name
-      //             })
-      //           }
-      //         <div>)
-    }
-
-    return (<div>Loading Sidebar...</div>);
-  }
+  // renderSidebar = ({error, props}) => {
+  //   if( props ) {
+  //     // return (<div>
+  //     //           {
+  //     //             props.regions.map( (region) => {
+  //     //               return region.name
+  //     //             })
+  //     //           }
+  //     //         <div>)
+  //   }
+  //
+  //   return (<div>Loading Sidebar...</div>);
+  // }
 
   render() {
     const {classes, ...rest } = this.props;
 
     return (
     <div className={classes.wrapper}>
+        {/*
         <QueryRenderer
           environment={environment}
           query={regionsQuery}
           render={::this.renderSidebar}
         />
+      */}
         <Sidebar
          routes={dashboardRoutes}
          logoText={'Traffic Monitor'}
@@ -90,6 +93,7 @@ class MainLayout extends React.Component<Props, State> {
           <div className={classes.content}>
             <Switch>
               <Route path='/region/:regionid' component={Region} />
+              <Route path='/dashboard' component={Dashboard} />
             </Switch>
           </div>
           <Footer />

@@ -5,6 +5,34 @@ body {
     line-height: 1.5em;
 }
 
+.rdtPicker {
+  background-color: #9C27B0 !important;
+}
+
+.rdt input {
+  font-family: "Arimo", "Rubik","Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.rdt input.form-control {
+    box-shadow: none;
+    border-color: transparent;
+    border: 0;
+    background-image: linear-gradient(#9c27b0,#9c27b0),linear-gradient(#d2d2d2,#d2d2d2)
+}
+
+.rdt input.form-control::-webkit-input-placeholder {
+  color: white;
+}
+
+:placeholder-shown {
+  color: white;
+}
+
+.rdtSwitch {
+  font-family: "Arimo", "Rubik","Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: inherit;
+}
+
 .ct-series-a .ct-bar {
   /* Set the colour of this series line */
   stroke: white;

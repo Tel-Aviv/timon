@@ -12,6 +12,14 @@ type Camera implements INode {
   location: GeoCenter!
 }
 
+type Cluster implements INode {
+  id: ID!
+  name: String!
+  ins(from: Date!, till: Date!): Int
+  outs(from: Date!, till: Date!): Int
+  gates: [Gate]
+}
+
 scalar Date
 
 enum Direction {
@@ -21,12 +29,8 @@ enum Direction {
 
 type Gate implements INode {
   id: ID!
-  cameraName: String
-  Total: Int
-  SouthCluster: Int
-  NorthCluster: Int
-  EastCluster: Int
-  WestCluster: Int
+  ins(from: Date!, till: Date!): Int
+  outs(from: Date!, till: Date!): Int
 }
 
 type GeoCenter {
@@ -38,9 +42,20 @@ interface INode {
   id: ID!
 }
 
+type Intersection implements INode {
+  id: ID!
+  cameraName: String
+  Total: Int
+  SouthCluster: Int
+  NorthCluster: Int
+  EastCluster: Int
+  WestCluster: Int
+}
+
 type Query {
   region(regionId: Int!): Region
   regions: [Region]
+  clusters: [Cluster]
 }
 
 type Region implements INode {
@@ -53,15 +68,20 @@ type Region implements INode {
   summaries(from: Date!, till: Date!): [Summary!]
   dayOfWeekDisrtibution(from: Date!, till: Date!): Serie
   hourlyDistribution(date: Date!): [Serie]
-  vehicleTypeDistribution(date: Date!): Serie
+  vehicleTypeDistribution(date: Date!): SingleSerie
   frequencyDistribution(from: Date!, till: Date!): Serie
   lagsDistribution(from: Date!, till: Date!): Serie
-  clusterDistribution(direction: Direction!, from: Date!, till: Date!): [Gate]
+  intersectionDistribution(direction: Direction!, from: Date!, till: Date!): [Intersection]
 }
 
 type Serie {
   labels: [String]
   values: [[Int]]
+}
+
+type SingleSerie {
+  labels: [String]
+  values: [Int]
 }
 
 type Summary implements INode {
