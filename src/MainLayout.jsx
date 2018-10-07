@@ -3,15 +3,15 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { QueryRenderer, graphql } from 'react-relay';
 import environment from './Environment';
-
 import withStyles from '@material-ui/core/styles/withStyles';
-
+// Views
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Region from './Region';
-import Dashboard from './Dashboard';
-
+import Home from './Home';
+import Predictions from './views/Predictions/Predictions';
+// Styles
 import dashboardStyle from "./assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 import dashboardRoutes from './routes/dashboard.jsx';
 
@@ -93,7 +93,8 @@ class MainLayout extends React.Component<Props, State> {
           <div className={classes.content}>
             <Switch>
               <Route path='/region/:regionid' component={Region} />
-              <Route path='/dashboard' component={Dashboard} />
+              <Route path='/home' component={Home} />
+              <Route path='/predictions' component={Predictions} />
             </Switch>
           </div>
           <Footer />

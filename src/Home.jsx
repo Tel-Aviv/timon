@@ -6,9 +6,11 @@ import { QueryRenderer, graphql } from 'react-relay';
 import environment from './Environment';
 import moment from 'moment';
 import ChartistGraph from "react-chartist";
-
+// Views
+import Maps from './views/Maps/Maps';
 import RegionSummary from './RegionSummary';
-
+import RegionChart from './RegionChart';
+// Components
 import GridItem from "./components/GridItem.jsx";
 import GridContainer from "./components/GridContainer.jsx";
 import Card from "./components/Card.jsx";
@@ -19,21 +21,41 @@ import CardFooter from "./components/CardFooter.jsx";
 import Danger from "./components/Danger.jsx";
 import Table from "./components/Table.jsx";
 
+
 import dashboardStyle from "./assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 const homeQuery = graphql`
-  query Dashboard_Query ($from: Date!,
+  query Home_Query ($from: Date!,
                          $till: Date!)
   {
   	clusters {
       name
+      clusterId
       ins (from: $from, till: $till)
       outs (from: $from, till: $till)
     }
   }
   `;
 
-class Dashboard extends React.Component<Props, State> {
+type State = {
+  showClusterCameras: boolean,
+  clusterName: String
+}
+
+class Home extends React.Component<Props, State> {
+
+  state = {
+    showClusterCameras: false,
+    clusterName: ''
+  }
+
+  tableRowClicked = (rowData) => {
+    const clusterId = rowData[0];
+    this.setState({
+      showClusterCameras: true,
+      clusterName: rowData[1]
+    });
+  }
 
   renderHome( {error, props} ) {
 
@@ -49,20 +71,29 @@ class Dashboard extends React.Component<Props, State> {
     } else if( props) {
 
         const tableData = [];
+
+        const totalIns =
+          props.clusters.reduce( (acc,cluster) => acc + cluster.ins, 0);
+        const totalOuts =
+          props.clusters.reduce( (acc,cluster) => acc + cluster.outs, 0);
+
         props.clusters.map( cluster => {
-            const row = [cluster.name,
-                        '19', cluster.ins.toString(),
-                        '45', cluster.outs.toString()];
+            const row = [cluster.clusterId.toString(),
+                         cluster.name,
+                        Number.parseFloat( (cluster.ins/totalIns * 100) ).toFixed(1) + '%',
+                        cluster.ins.toString(),
+                        Number.parseFloat( (cluster.outs/totalOuts * 100) ).toFixed(1) + '%',
+                        cluster.outs.toString(),
+                        ];
             tableData.push(row);
         });
 
-        const chatType = 'Pie';
+        const chartType = 'Pie';
         const chartData = {
           //series: [[340, 209, 33]],
           series: [340, 209, 33],
           labels: ['cars', 'tracks', 'buses']
         };
-
 
         const chartData2 = {
           //series: [[340, 209, 33]],
@@ -78,34 +109,57 @@ class Dashboard extends React.Component<Props, State> {
         //     }
         //   }
         // };
+        let ClusterCamerasTable = null;
+        if( this.state.showClusterCameras ) {
+
+          const tableData = [];
+
+          ClusterCamerasTable = (<Card>
+            <CardHeader color="primary">
+              <div>{this.state.clusterName}</div>
+            </CardHeader>
+            <CardBody>
+              <Table tableHeaderColor="primary"
+                tableHead={['ID', 'Camera', '%', 'Enters', '%','Exits']}
+                tableData={tableData}
+                />
+            </CardBody>
+          </Card>);
+        }
+
+        const cityCenter = {lat:32.066667, lon:34.78333};
 
         return (
           <React.Fragment>
             <GridContainer>
+              <GridItem xs={12} sm={12} md={6}>
                 <RegionSummary classes={this.props.classes}
                   kind={'IN'}
                   value={'23.455'}
                 />
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
                 <RegionSummary classes={this.props.classes}
                   kind={'OUT'}
                   value={'564.490'}
                 />
+              </GridItem>
             </GridContainer>
             <GridContainer>
+
               <GridItem xs={12} sm={12} md={6}>
-                <ChartistGraph
-                  className="ct-chart"
-                  data={chartData}
-                  type={chatType}
-                  />
+                <RegionChart classes={this.props.classes}
+                        type={chartType}
+                        data={chartData}
+                        title={'Vehicles'} />
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
-                <ChartistGraph
-                  className="ct-chart"
-                  data={chartData2}
-                  type={chatType}
-                  />
+                <RegionChart classes={this.props.classes}
+                        type={chartType}
+                        data={chartData2}
+                        title={'Commutes'} />
               </GridItem>
+
             </GridContainer>
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
@@ -115,13 +169,19 @@ class Dashboard extends React.Component<Props, State> {
                   </CardHeader>
                   <CardBody>
                     <Table tableHeaderColor="primary"
-                          tableHead={['Gate', '%', 'Enters', '%','Exits']}
+                          tableHead={['ID', 'Gate', '%', 'Enters', '%','Exits']}
                           tableData={tableData}
+                          rowClickHandler={::this.tableRowClicked}
                       />
+                    {ClusterCamerasTable}
                   </CardBody>
                 </Card>
               </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+                <Maps center={cityCenter}/>
+              </GridItem>
             </GridContainer>
+
           </React.Fragment>
         );
     }
@@ -132,8 +192,8 @@ class Dashboard extends React.Component<Props, State> {
   render() {
 
     const queryVariables = {
-      from: '24/09/2018',
-      till: '25/09/2018'
+      from: this.props.fromDate.format('DD/MM/YYYY'),
+      till: this.props.tillDate.format('DD/MM/YYYY')
     };
 
     return (<React.Fragment>
@@ -154,4 +214,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withStyles(dashboardStyle)(connect(mapStateToProps)(Dashboard));
+export default withStyles(dashboardStyle)(connect(mapStateToProps)(Home));

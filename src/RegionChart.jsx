@@ -18,9 +18,10 @@ type Props = {
     cardTitle: {},
     cardCategory: {}
   },
-  type: string,
+  type: String,
   data: [],
-  title: string
+  title: String,
+  color: String
 }
 
 class RegionChart extends React.Component<Props> {
@@ -29,7 +30,7 @@ class RegionChart extends React.Component<Props> {
 
     const {classes, type, data, title, color, ...rest} = this.props;
 
-    return (<GridItem xs={12} sm={12} md={4}>
+    return (
       <Card chart>
         <CardHeader color={color}>
           <ChartistGraph
@@ -44,7 +45,7 @@ class RegionChart extends React.Component<Props> {
             </p>
         </CardBody>
       </Card>
-    </GridItem>)
+    )
   }
 }
 

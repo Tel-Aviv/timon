@@ -1,52 +1,49 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
-// import ContentPaste from "@material-ui/icons/ContentPaste";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
+import Camera from "@material-ui/icons/CameraFrontSharp";
+import BubbleChart from "@material-ui/icons/BubbleChartSharp";
 import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
+import PredictionsIcon from "@material-ui/icons/FlipSharp";
 // core components/views
-import DashboardPage from "../views/Dashboard/Dashboard.jsx";
-import TableList from "../views/TableList/TableList.jsx";
-import Icons from "../views/Icons/Icons.jsx";
-import Maps from "../views/Maps/Maps.jsx";
-import NotificationsPage from "../views/Notifications/Notifications.jsx";
-import UserProfile from "../views/UserProfile/UserProfile.jsx";
+import Region from '../Region';
+import Home from '../Home';
+import Cameras from "../Cameras";
+import Predictions from "../views/Predictions/Predictions";
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
+    path: "/home",
     sidebarName: "City",
     navbarName: "City",
     icon: Dashboard,
-    component: DashboardPage
-  },
-  {
+    component: Home
+  }, {
     path: "/region/1",
     sidebarName: "Region 1",
     navbarName: "Region 1",
     icon: LocationOn,
-    component: TableList
-  },
-  {
+    component: Region
+  }, {
     path: '/region/2',
     sidebarName: "Region 2",
     navbarName: "Region 2",
-    icon: BubbleChart,
-    component: Icons
-  },
-  {
+    icon: LocationOn,
+    component: Region
+  }, {
     path: "/cameras",
     sidebarName: "Cameras",
     navbarName: "Cameras",
-    icon: LocationOn,
-    component: Maps
-  },
-  { redirect: true,
+    icon: Camera,
+    component: Cameras
+  },{
+    path: "/predictions",
+    sidebarName: "Predictions",
+    navbarName: "Predictions",
+    icon: PredictionsIcon,
+    component: Predictions
+  }, { redirect: true,
     path: "/",
-    to: "/dashboard",
+    to: "/home",
     navbarName: "City" }
 ];
 

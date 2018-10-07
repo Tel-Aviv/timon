@@ -38,7 +38,7 @@ class RegionSummary extends React.Component<Props> {
     });
 
     return (
-      <GridItem xs={12} sm={6} md={3}>
+
         <Card>
           <CardHeader color={iconColor} stats icon>
             <CardIcon color={iconColor} >
@@ -46,7 +46,7 @@ class RegionSummary extends React.Component<Props> {
             </CardIcon>
             <p className={classes.cardCategory}>{this.props.kind}</p>
             <h3 className={classes.cardTitle}>
-              {this.props.value} <small>Hundreds </small>
+              {this.props.value} <small>vehicles</small>
             </h3>
           </CardHeader>
           <CardFooter stats>
@@ -60,7 +60,6 @@ class RegionSummary extends React.Component<Props> {
             </div>
           </CardFooter>
         </Card>
-      </GridItem>
     );
   }
 };

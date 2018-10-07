@@ -10,14 +10,15 @@ const CustomSkinMap = withScriptjs(
   withGoogleMap(props => {
 
     //console.log(props.cameras);
-    const cameraMarkers = props.cameras.map( (camera, index) => {
+    const cameraMarkers = props.cameras ?
+    props.cameras.map( (camera, index) => {
       return <Marker position={{
                           lat: camera.location.lat,
                           lng: camera.location.lon
                         }}
                      key={index}
         />
-    })
+    }) : null;
 
     return (<GoogleMap
       defaultZoom={13}

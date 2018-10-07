@@ -133,12 +133,13 @@ class Region extends React.Component<Props, State> {
     const color = 'success';
 
     return (
+      <GridItem xs={12} sm={12} md={4}>
         <RegionChart classes={classes}
                       type={chartType}
                       data={chartData}
                       title={chartTille}
                       color={color} />
-            );
+      </GridItem>);
 
   }
 
@@ -155,12 +156,14 @@ class Region extends React.Component<Props, State> {
     const success = 'warning';
 
     return (
+      <GridItem xs={12} sm={12} md={4}>
         <RegionChart classes={classes}
                       type={chartType}
                       data={chartData}
                       title={chartTille}
                       color={success}  />
-            );
+      </GridItem>
+    );
   }
 
   renderVehicleTypeDistributionChart(data) {
@@ -176,12 +179,13 @@ class Region extends React.Component<Props, State> {
     const success = 'danger';
 
     return (
+      <GridItem xs={12} sm={12} md={4}>
         <RegionChart classes={classes}
                       type={chartType}
                       data={chartData}
                       title={chartTille}
                       color={success}  />
-            );
+      </GridItem>);
 
   }
 
@@ -229,10 +233,12 @@ class Region extends React.Component<Props, State> {
                 <GridContainer>
                   {
                    summariesKinds.map( (kind, index) => {
-                   return <RegionSummary classes={this.props.classes}
-                                         kind={props.region.summaries[index].kind}
-                                         value={props.region.summaries[index].value}
-                                         key={index} />
+                     return (<GridItem xs={12} sm={6} md={3}>
+                                <RegionSummary classes={this.props.classes}
+                                           kind={props.region.summaries[index].kind}
+                                           value={props.region.summaries[index].value}
+                                           key={index} />
+                            </GridItem>)
                   })
                 }
                 </GridContainer>
@@ -246,18 +252,18 @@ class Region extends React.Component<Props, State> {
                     <GridItem xs={12} sm={12} md={6}>
                         <Card>
                           <CardHeader color="primary">
-                            <div style={{textAlign: 'center'}}>Entrances</div>
+                            <div style={{textAlign: 'center'}}>Entrances Interceptions with Gates</div>
                           </CardHeader>
                           <CardBody>
                             <Table tableHeaderColor="primary"
-                                tableHead={['Gate', 'Total','North','South','East', 'West']}
+                                tableHead={['Camera', 'Total','North','South','East', 'West']}
                                 tableData={tableDataIns}
                             />
                           </CardBody>
                       </Card>
                       <Card>
                         <CardHeader color="primary">
-                          <div style={{textAlign: 'center'}}>Exits</div>
+                          <div style={{textAlign: 'center'}}>Exits Interceptions with Gates</div>
                         </CardHeader>
                         <CardBody>
                           <Table tableHeaderColor="primary"
