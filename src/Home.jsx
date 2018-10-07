@@ -10,6 +10,10 @@ import ChartistGraph from "react-chartist";
 import Maps from './views/Maps/Maps';
 import RegionSummary from './RegionSummary';
 import RegionChart from './RegionChart';
+// Icons
+import ArrowOut from "@material-ui/icons/ArrowUpward";
+import ArrowIn from "@material-ui/icons/ArrowDownward";
+
 // Components
 import GridItem from "./components/GridItem.jsx";
 import GridContainer from "./components/GridContainer.jsx";
@@ -136,13 +140,17 @@ class Home extends React.Component<Props, State> {
                 <RegionSummary classes={this.props.classes}
                   kind={'IN'}
                   value={'23.455'}
-                />
+                  color={'rose'}>
+                  <ArrowIn />
+              </RegionSummary>
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
                 <RegionSummary classes={this.props.classes}
                   kind={'OUT'}
                   value={'564.490'}
-                />
+                  color={'info'}>
+                  <ArrowOut />
+                </RegionSummary>
               </GridItem>
             </GridContainer>
             <GridContainer>

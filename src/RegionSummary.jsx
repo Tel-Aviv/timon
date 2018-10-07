@@ -3,13 +3,8 @@
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay';
 import classNames from 'classnames';
-// @material-ui/core
-import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
-import Accessibility from "@material-ui/icons/Accessibility";
 // core components
 import GridItem from "./components/GridItem.jsx";
 import GridContainer from "./components/GridContainer.jsx";
@@ -28,21 +23,21 @@ class RegionSummary extends React.Component<Props> {
 
   render() {
 
-    const { classes, kind, ...rest } = this.props;
+    const { classes, kind, color, ...rest } = this.props;
 
     const iconColor = classNames({
       "warning": kind === 'IN',
       "info": kind === 'OUT',
       "rose": kind === 'CROSS',
-      "success": kind === "PASSENGERS"
+      "success": kind === "PEOPLE"
     });
 
     return (
 
         <Card>
-          <CardHeader color={iconColor} stats icon>
-            <CardIcon color={iconColor} >
-              <Icon>info_outline</Icon>
+          <CardHeader color={color} stats icon>
+            <CardIcon color={color} >
+              {this.props.children}
             </CardIcon>
             <p className={classes.cardCategory}>{this.props.kind}</p>
             <h3 className={classes.cardTitle}>

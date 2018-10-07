@@ -12,6 +12,8 @@ import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
+import ArrowOut from "@material-ui/icons/ArrowUpward";
+import ArrowIn from "@material-ui/icons/ArrowDownward";
 // core components
 import GridItem from "./components/GridItem.jsx";
 import GridContainer from "./components/GridContainer.jsx";
@@ -184,7 +186,9 @@ class Region extends React.Component<Props, State> {
                       type={chartType}
                       data={chartData}
                       title={chartTille}
-                      color={success}  />
+                      color={success}>
+
+        </RegionChart>
       </GridItem>);
 
   }
@@ -233,11 +237,37 @@ class Region extends React.Component<Props, State> {
                 <GridContainer>
                   {
                    summariesKinds.map( (kind, index) => {
-                     return (<GridItem xs={12} sm={6} md={3}>
+
+                     let iconColor = 'warning';
+                     switch( kind ) {
+                        case  1: { // 'IN'
+                          iconColor = 'warning';
+                        }
+                        break;
+
+                        case 2: { // 'OUT'
+                          iconColor = 'info';
+                        }
+                        break;
+
+                        case 3: { // 'CROSS'
+                          iconColor = 'rose';
+                        }
+                        break;
+
+                        case 4: { // 'PEOPLE'
+                          iconColor = 'success';
+                        }
+                        break;
+                     }
+
+                     return (<GridItem xs={12} sm={6} md={3} key={index}>
                                 <RegionSummary classes={this.props.classes}
                                            kind={props.region.summaries[index].kind}
                                            value={props.region.summaries[index].value}
-                                           key={index} />
+                                           color={iconColor}>
+                                    <ArrowOut />
+                                </RegionSummary>
                             </GridItem>)
                   })
                 }

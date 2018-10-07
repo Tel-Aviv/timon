@@ -96,7 +96,7 @@ enum SummaryKind {
   IN
   OUT
   CROSS
-  PASSENGERS
+  PEOPLE
 }
 
 """
