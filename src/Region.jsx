@@ -155,7 +155,7 @@ class Region extends React.Component<Props, State> {
 
     const chartType = 'Bar';
     const chartTille = 'Hourly Distribution';
-    const success = 'warning';
+    const color = 'warning';
 
     return (
       <GridItem xs={12} sm={12} md={4}>
@@ -163,7 +163,7 @@ class Region extends React.Component<Props, State> {
                       type={chartType}
                       data={chartData}
                       title={chartTille}
-                      color={success}  />
+                      color={color}  />
       </GridItem>
     );
   }
@@ -178,7 +178,7 @@ class Region extends React.Component<Props, State> {
 
     const chartType = 'Pie';
     const chartTille = 'Vehicle Types';
-    const success = 'danger';
+    const color = 'danger';
 
     return (
       <GridItem xs={12} sm={12} md={4}>
@@ -186,7 +186,7 @@ class Region extends React.Component<Props, State> {
                       type={chartType}
                       data={chartData}
                       title={chartTille}
-                      color={success}>
+                      color={color}>
 
         </RegionChart>
       </GridItem>);

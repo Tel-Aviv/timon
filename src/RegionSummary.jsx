@@ -25,13 +25,6 @@ class RegionSummary extends React.Component<Props> {
 
     const { classes, kind, color, ...rest } = this.props;
 
-    const iconColor = classNames({
-      "warning": kind === 'IN',
-      "info": kind === 'OUT',
-      "rose": kind === 'CROSS',
-      "success": kind === "PEOPLE"
-    });
-
     return (
 
         <Card>

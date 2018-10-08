@@ -25,7 +25,6 @@ import CardFooter from "./components/CardFooter.jsx";
 import Danger from "./components/Danger.jsx";
 import Table from "./components/Table.jsx";
 
-
 import dashboardStyle from "./assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 const homeQuery = graphql`
@@ -37,13 +36,21 @@ const homeQuery = graphql`
       clusterId
       ins (from: $from, till: $till)
       outs (from: $from, till: $till)
+
+      gates{
+        id
+        name
+        ins(from: $from, till: $till)
+        outs(from: $from, till: $till)
+      }
     }
   }
   `;
 
 type State = {
   showClusterCameras: boolean,
-  clusterName: String
+  clusterName: String,
+  clusterId: number
 }
 
 class Home extends React.Component<Props, State> {
@@ -57,6 +64,7 @@ class Home extends React.Component<Props, State> {
     const clusterId = rowData[0];
     this.setState({
       showClusterCameras: true,
+      clusterId: rowData[0],
       clusterName: rowData[1]
     });
   }
@@ -74,6 +82,8 @@ class Home extends React.Component<Props, State> {
 
     } else if( props) {
 
+        this.clustersData = props.clusters;
+
         const tableData = [];
 
         const totalIns =
@@ -84,10 +94,11 @@ class Home extends React.Component<Props, State> {
         props.clusters.map( cluster => {
             const row = [cluster.clusterId.toString(),
                          cluster.name,
-                        Number.parseFloat( (cluster.ins/totalIns * 100) ).toFixed(1) + '%',
                         cluster.ins.toString(),
-                        Number.parseFloat( (cluster.outs/totalOuts * 100) ).toFixed(1) + '%',
+                        Number.parseFloat( (cluster.ins/totalIns * 100) ).toFixed(1) + '%',
                         cluster.outs.toString(),
+                        Number.parseFloat( (cluster.outs/totalOuts * 100) ).toFixed(1) + '%'
+
                         ];
             tableData.push(row);
         });
@@ -116,7 +127,26 @@ class Home extends React.Component<Props, State> {
         let ClusterCamerasTable = null;
         if( this.state.showClusterCameras ) {
 
+          const clusterId = this.state.clusterId;
+          console.log(this.state.clusterId);
+          console.log(this.clustersData[clusterId-1].gates);
+          const gates = this.clustersData[clusterId-1].gates;
+
           const tableData = [];
+
+          const totalIns = gates.reduce( (acc, gate) => acc + gate.ins, 0);
+          const totalOuts = gates.reduce( (acc, gate) => acc + gate.outs, 0);
+
+          gates.map( gate => {
+            const row = [
+              gate.name,
+              gate.ins,
+              Number.parseFloat( gate.ins/totalIns * 100 ).toFixed(1) + '%',
+              gate.outs,
+              Number.parseFloat( gate.ins/totalIns * 100 ).toFixed(1) + '%',
+            ];
+            tableData.push(row);
+          });
 
           ClusterCamerasTable = (<Card>
             <CardHeader color="primary">
@@ -124,7 +154,7 @@ class Home extends React.Component<Props, State> {
             </CardHeader>
             <CardBody>
               <Table tableHeaderColor="primary"
-                tableHead={['ID', 'Camera', '%', 'Enters', '%','Exits']}
+                tableHead={['Camera', 'Enters', '%','Exits', '%']}
                 tableData={tableData}
                 />
             </CardBody>
@@ -177,7 +207,7 @@ class Home extends React.Component<Props, State> {
                   </CardHeader>
                   <CardBody>
                     <Table tableHeaderColor="primary"
-                          tableHead={['ID', 'Gate', '%', 'Enters', '%','Exits']}
+                          tableHead={['ID', 'Gate', 'Enters', '%','Exits', '%']}
                           tableData={tableData}
                           rowClickHandler={::this.tableRowClicked}
                       />
@@ -200,8 +230,8 @@ class Home extends React.Component<Props, State> {
   render() {
 
     const queryVariables = {
-      from: this.props.fromDate.format('DD/MM/YYYY'),
-      till: this.props.tillDate.format('DD/MM/YYYY')
+      from: '18/09/2018', // this.props.fromDate.format('DD/MM/YYYY'),
+      till: '19/09/2018' //this.props.tillDate.format('DD/MM/YYYY')
     };
 
     return (<React.Fragment>
