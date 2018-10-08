@@ -211,6 +211,15 @@ class Region extends React.Component<Props> {
 
   }
 
+  renderLostTimeTable(date) {
+        // <Table tableHeaderColor="primary"
+        //     tableHead={['Camera', 'Total','North','South','East', 'West']}
+        //     tableData={tableDataIns}
+        // />
+
+    return <div>Lost Time</div>
+  }
+
   renderRegion( {error, props} ) {
 
     const summariesKinds = [1,2,3,4];
@@ -338,6 +347,7 @@ class Region extends React.Component<Props> {
                     {::this.renderCommutesChart(props.region.commuteDistribution)}
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
+                    {::this.renderLostTimeTable()}
                   </GridItem>
                 </GridContainer>
             </React.Fragment>);
