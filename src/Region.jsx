@@ -14,6 +14,7 @@ import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
 import ArrowOut from "@material-ui/icons/ArrowUpward";
 import ArrowIn from "@material-ui/icons/ArrowDownward";
+import PieChart from "@material-ui/icons/PieChart";
 // core components
 import GridItem from "./components/GridItem.jsx";
 import GridContainer from "./components/GridContainer.jsx";
@@ -24,18 +25,13 @@ import CardBody from "./components/CardBody.jsx";
 import CardFooter from "./components/CardFooter.jsx";
 import Danger from "./components/Danger.jsx";
 import Table from "./components/Table.jsx";
+import IconChart from './components/IconChart';
+import RaisedChart from './components/RaisedChart';
 
 import Maps from './views/Maps/Maps';
 
 import RegionSummary from './RegionSummary';
-import RegionChart from './RegionChart';
 import dashboardStyle from "./assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
-
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "./variables/charts";
 
 type Props = {
   classes: {
@@ -43,10 +39,6 @@ type Props = {
     cardTitle: {},
     stats: {}
   }
-}
-
-type State = {
-
 }
 
 const summariesQuery = graphql`
@@ -104,6 +96,11 @@ const summariesQuery = graphql`
         WestCluster
       }
 
+      commuteDistribution(from: $from, till: $till) {
+        labels
+        values
+      }
+
       center {
         lat
         lon
@@ -121,7 +118,7 @@ const summariesQuery = graphql`
   }
 `;
 
-class Region extends React.Component<Props, State> {
+class Region extends React.Component<Props> {
 
   renderWeeklyDistributionChart(data) {
 
@@ -135,13 +132,12 @@ class Region extends React.Component<Props, State> {
     const color = 'success';
 
     return (
-      <GridItem xs={12} sm={12} md={4}>
-        <RegionChart classes={classes}
+        <RaisedChart classes={classes}
                       type={chartType}
                       data={chartData}
                       title={chartTille}
                       color={color} />
-      </GridItem>);
+      );
 
   }
 
@@ -158,14 +154,13 @@ class Region extends React.Component<Props, State> {
     const color = 'warning';
 
     return (
-      <GridItem xs={12} sm={12} md={4}>
-        <RegionChart classes={classes}
+
+        <RaisedChart classes={classes}
                       type={chartType}
                       data={chartData}
                       title={chartTille}
                       color={color}  />
-      </GridItem>
-    );
+        );
   }
 
   renderVehicleTypeDistributionChart(data) {
@@ -181,15 +176,38 @@ class Region extends React.Component<Props, State> {
     const color = 'danger';
 
     return (
-      <GridItem xs={12} sm={12} md={4}>
-        <RegionChart classes={classes}
+
+        <RaisedChart classes={classes}
+                      type={chartType}
+                      data={chartData}
+                      title={chartTille}
+                      color={color} />
+      );
+
+  }
+
+  renderCommutesChart(data) {
+
+    const {classes, ...rest } = this.props;
+
+    const chartData = {
+      series: data.values[1],
+      labels: data.labels
+    };
+
+    const chartType = 'Pie';
+    const chartTille = 'Commutes';
+    const color = 'success';
+
+    return (
+        <IconChart classes={classes}
                       type={chartType}
                       data={chartData}
                       title={chartTille}
                       color={color}>
-
-        </RegionChart>
-      </GridItem>);
+            <PieChart />
+        </IconChart>
+    );
 
   }
 
@@ -273,9 +291,15 @@ class Region extends React.Component<Props, State> {
                 }
                 </GridContainer>
                 <GridContainer>
-                  {::this.renderWeeklyDistributionChart(props.region.dayOfWeekDisrtibution)}
-                  {::this.renderHourlyDistributionChart(props.region.hourlyDistribution)}
-                  {::this.renderVehicleTypeDistributionChart(props.region.vehicleTypeDistribution)}
+                  <GridItem xs={12} sm={12} md={4}>
+                    {::this.renderWeeklyDistributionChart(props.region.dayOfWeekDisrtibution)}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    {::this.renderHourlyDistributionChart(props.region.hourlyDistribution)}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    {::this.renderVehicleTypeDistributionChart(props.region.vehicleTypeDistribution)}
+                  </GridItem>
                 </GridContainer>
 
                 <GridContainer>
@@ -309,6 +333,13 @@ class Region extends React.Component<Props, State> {
                     </GridItem>
                 </GridContainer>
 
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    {::this.renderCommutesChart(props.region.commuteDistribution)}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                  </GridItem>
+                </GridContainer>
             </React.Fragment>);
     }
 

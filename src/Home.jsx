@@ -9,7 +9,7 @@ import ChartistGraph from "react-chartist";
 // Views
 import Maps from './views/Maps/Maps';
 import RegionSummary from './RegionSummary';
-import RegionChart from './RegionChart';
+import IconChart from './components/IconChart';
 // Icons
 import ArrowOut from "@material-ui/icons/ArrowUpward";
 import ArrowIn from "@material-ui/icons/ArrowDownward";
@@ -29,7 +29,7 @@ import dashboardStyle from "./assets/jss/material-dashboard-react/views/dashboar
 
 const homeQuery = graphql`
   query Home_Query ($from: Date!,
-                         $till: Date!)
+                    $till: Date!)
   {
   	clusters {
       name
@@ -186,13 +186,13 @@ class Home extends React.Component<Props, State> {
             <GridContainer>
 
               <GridItem xs={12} sm={12} md={6}>
-                <RegionChart classes={this.props.classes}
+                <IconChart classes={this.props.classes}
                         type={chartType}
                         data={chartData}
                         title={'Vehicles'} />
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
-                <RegionChart classes={this.props.classes}
+                <IconChart classes={this.props.classes}
                         type={chartType}
                         data={chartData2}
                         title={'Commutes'} />

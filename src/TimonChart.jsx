@@ -5,13 +5,8 @@ import ChartistGraph from "react-chartist";
 import GridItem from "./components/GridItem.jsx";
 import Card from "./components/Card.jsx";
 import CardHeader from "./components/CardHeader.jsx";
+import CardIcon from "./components/CardIcon.jsx";
 import CardBody from "./components/CardBody.jsx";
-
-// import {
-//   dailySalesChart,
-//   emailsSubscriptionChart,
-//   completedTasksChart
-// } from "./variables/charts";
 
 type Props = {
   classes : {
@@ -24,22 +19,25 @@ type Props = {
   color: String
 }
 
-class RegionChart extends React.Component<Props> {
+class TimonChart extends React.Component<Props> {
 
   render() {
 
     const {classes, type, data, title, color, ...rest} = this.props;
 
     return (
-      <Card chart>
-        <CardHeader color={color}>
-          <ChartistGraph
-            className="ct-chart"
-            data={data}
-            type={type}
-            />
+      <Card>
+        <CardHeader icon>
+          <CardIcon color={color}>
+            {this.props.children}
+          </CardIcon>
         </CardHeader>
         <CardBody>
+            <ChartistGraph
+              className="ct-chart"
+              data={data}
+              type={type}
+              />
             <h4 className={classes.cardTitle}>{title}</h4>
             <p className={classes.cardCategory}>
             </p>
@@ -49,4 +47,4 @@ class RegionChart extends React.Component<Props> {
   }
 }
 
-export default RegionChart;
+export default TimonChart;
