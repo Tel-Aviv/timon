@@ -6,6 +6,8 @@ import { QueryRenderer, graphql } from 'react-relay';
 import environment from './Environment';
 import moment from 'moment';
 import ChartistGraph from "react-chartist";
+// @material-ui/core
+import Divider from '@material-ui/core/Divider';
 // Views
 import Maps from './views/Maps/Maps';
 import RegionSummary from './RegionSummary';
@@ -13,6 +15,7 @@ import IconChart from './components/IconChart';
 // Icons
 import ArrowOut from "@material-ui/icons/ArrowUpward";
 import ArrowIn from "@material-ui/icons/ArrowDownward";
+import PieChart from "@material-ui/icons/PieChart";
 
 // Components
 import GridItem from "./components/GridItem.jsx";
@@ -162,43 +165,59 @@ class Home extends React.Component<Props, State> {
         }
 
         const cityCenter = {lat:32.066667, lon:34.78333};
+        const summaryNote = '3 cameras considered';
 
         return (
           <React.Fragment>
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <RegionSummary classes={this.props.classes}
-                  kind={'IN'}
+                  kind={'ENTRANCES'}
                   value={'23.455'}
-                  color={'rose'}>
+                  color={'success'}
+                  units={'vehicles'}
+                  note={summaryNote}>
                   <ArrowIn />
               </RegionSummary>
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
                 <RegionSummary classes={this.props.classes}
-                  kind={'OUT'}
+                  kind={'EXITS'}
                   value={'564.490'}
-                  color={'info'}>
+                  color={'success'}
+                  units={'vehicles'}
+                  note={summaryNote}>
                   <ArrowOut />
                 </RegionSummary>
               </GridItem>
             </GridContainer>
+            <br />
+            <Divider />
+            <br />
             <GridContainer>
 
               <GridItem xs={12} sm={12} md={6}>
                 <IconChart classes={this.props.classes}
                         type={chartType}
                         data={chartData}
-                        title={'Vehicles'} />
+                        title={'Vehicles'}
+                        color={'info'}>
+                    <PieChart />
+                </IconChart>
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
                 <IconChart classes={this.props.classes}
                         type={chartType}
                         data={chartData2}
-                        title={'Commutes'} />
+                        title={'Commutes'}
+                        color={'info'}>
+                    <PieChart />
+                </IconChart>
               </GridItem>
 
             </GridContainer>
+            <Divider />
+            <br />
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <Card>

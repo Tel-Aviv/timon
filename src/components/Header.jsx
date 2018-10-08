@@ -16,7 +16,6 @@ import Menu from "@material-ui/icons/Menu";
 import GridItem from './GridItem';
 import GridContainer from './GridContainer';
 // core components
-import HeaderLinks from "./HeaderLinks";
 import Button from "./Button";
 
 import headerStyle from "../assets/jss/material-dashboard-react/components/headerStyle.jsx";
@@ -99,9 +98,6 @@ class Header extends React.Component {
                 local='he'/>
             </GridItem>
           </GridContainer>
-          <Hidden smDown implementation="css">
-            <HeaderLinks />
-          </Hidden>
           <Hidden mdUp implementation="css">
             <IconButton
               color="inherit"

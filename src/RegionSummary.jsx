@@ -23,7 +23,7 @@ class RegionSummary extends React.Component<Props> {
 
   render() {
 
-    const { classes, kind, color, ...rest } = this.props;
+    const { classes, kind, color, units, note, ...rest } = this.props;
 
     return (
 
@@ -32,9 +32,9 @@ class RegionSummary extends React.Component<Props> {
             <CardIcon color={color} >
               {this.props.children}
             </CardIcon>
-            <p className={classes.cardCategory}>{this.props.kind}</p>
+            <p className={classes.cardCategory}>{kind}</p>
             <h3 className={classes.cardTitle}>
-              {this.props.value} <small>vehicles</small>
+              {this.props.value} <small>{units}</small>
             </h3>
           </CardHeader>
           <CardFooter stats>

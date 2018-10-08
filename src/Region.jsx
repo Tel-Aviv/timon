@@ -9,11 +9,14 @@ import { QueryRenderer, graphql } from 'react-relay';
 import environment from './Environment';
 // @material-ui/core
 import Icon from "@material-ui/core/Icon";
+import Divider from '@material-ui/core/Divider';
 // @material-ui/icons
 import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
 import ArrowOut from "@material-ui/icons/ArrowUpward";
 import ArrowIn from "@material-ui/icons/ArrowDownward";
+import CrossIcon from "@material-ui/icons/SwapVert";
+import PeopleIcon from "@material-ui/icons/DirectionsWalk";
 import PieChart from "@material-ui/icons/PieChart";
 // core components
 import GridItem from "./components/GridItem.jsx";
@@ -101,6 +104,11 @@ const summariesQuery = graphql`
         values
       }
 
+      lagsDistribution(from: $from, till: $till) {
+        labels
+        values
+      }
+
       center {
         lat
         lon
@@ -119,6 +127,59 @@ const summariesQuery = graphql`
 `;
 
 class Region extends React.Component<Props> {
+
+  renderSummaries(data) {
+
+    const note = '3 cameras considered';
+
+    return (
+      <React.Fragment>
+        <GridItem xs={12} sm={6} md={3}>
+          <RegionSummary classes={this.props.classes}
+                     kind={'ENTRANCES'}
+                     value={data[0].value}
+                     color={'warning'}
+                     units={'vehicles'}
+                     note={note}>
+              <ArrowOut />
+          </RegionSummary>
+        </GridItem>
+
+        <GridItem xs={12} sm={6} md={3}>
+          <RegionSummary classes={this.props.classes}
+                     kind={'EXITS'}
+                     value={data[1].value}
+                     color={'info'}
+                     units={'vehicles'}
+                     note={note}>
+              <ArrowIn />
+          </RegionSummary>
+        </GridItem>
+
+        <GridItem xs={12} sm={6} md={3}>
+          <RegionSummary classes={this.props.classes}
+                     kind={'CROSS'}
+                     value={data[2].value}
+                     color={'rose'}
+                     units={'vehicles'}
+                     note={note}>
+              <CrossIcon />
+          </RegionSummary>
+        </GridItem>
+
+        <GridItem xs={12} sm={6} md={3}>
+          <RegionSummary classes={this.props.classes}
+                     kind={'PEDESTRIANS'}
+                     value={data[3].value}
+                     color={'success'}
+                     units={'people'}
+                     note={note}>
+              <PeopleIcon />
+          </RegionSummary>
+        </GridItem>
+    </React.Fragment>
+    )
+  }
 
   renderWeeklyDistributionChart(data) {
 
@@ -211,18 +272,32 @@ class Region extends React.Component<Props> {
 
   }
 
-  renderLostTimeTable(date) {
-        // <Table tableHeaderColor="primary"
-        //     tableHead={['Camera', 'Total','North','South','East', 'West']}
-        //     tableData={tableDataIns}
-        // />
+  renderLagsTable(data) {
 
-    return <div>Lost Time</div>
+    const tableData = [
+                        ['North', '00:44', '13%'],
+                        ['South', '01:21', '213%'],
+                        ['East', '00:24', '59%'],
+                        ['West', '00:57', '33%']
+                      ];
+
+    return (
+      <Card>
+        <CardHeader color="primary">
+          <div style={{textAlign: 'center'}}>Lost Time</div>
+        </CardHeader>
+        <CardBody>
+          <Table tableHeaderColor="primary"
+              tableHead={['Cluster', 'Lost Time', '%']}
+              tableData={tableData}
+          />
+        </CardBody>
+      </Card>
+    )
   }
 
   renderRegion( {error, props} ) {
 
-    const summariesKinds = [1,2,3,4];
     if( error ) {
 
       return (<main className="main-container">
@@ -262,42 +337,9 @@ class Region extends React.Component<Props> {
 
       return (<React.Fragment>
                 <GridContainer>
-                  {
-                   summariesKinds.map( (kind, index) => {
 
-                     let iconColor = 'warning';
-                     switch( kind ) {
-                        case  1: { // 'IN'
-                          iconColor = 'warning';
-                        }
-                        break;
+                    {::this.renderSummaries(props.region.summaries)}
 
-                        case 2: { // 'OUT'
-                          iconColor = 'info';
-                        }
-                        break;
-
-                        case 3: { // 'CROSS'
-                          iconColor = 'rose';
-                        }
-                        break;
-
-                        case 4: { // 'PEOPLE'
-                          iconColor = 'success';
-                        }
-                        break;
-                     }
-
-                     return (<GridItem xs={12} sm={6} md={3} key={index}>
-                                <RegionSummary classes={this.props.classes}
-                                           kind={props.region.summaries[index].kind}
-                                           value={props.region.summaries[index].value}
-                                           color={iconColor}>
-                                    <ArrowOut />
-                                </RegionSummary>
-                            </GridItem>)
-                  })
-                }
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
@@ -310,6 +352,9 @@ class Region extends React.Component<Props> {
                     {::this.renderVehicleTypeDistributionChart(props.region.vehicleTypeDistribution)}
                   </GridItem>
                 </GridContainer>
+
+                <Divider />
+                <br />
 
                 <GridContainer>
                     <GridItem xs={12} sm={12} md={6}>
@@ -330,7 +375,7 @@ class Region extends React.Component<Props> {
                         </CardHeader>
                         <CardBody>
                           <Table tableHeaderColor="primary"
-                            tableHead={['Gate', 'Total','North','South','East', 'West']}
+                            tableHead={['Camera', 'Total','North','South','East', 'West']}
                             tableData={tableDataOuts}
                           />
                         </CardBody>
@@ -341,13 +386,15 @@ class Region extends React.Component<Props> {
                             cameras={props.region.cameras}/>
                     </GridItem>
                 </GridContainer>
-
+                <br />
+                <Divider />
+                <br />
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     {::this.renderCommutesChart(props.region.commuteDistribution)}
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
-                    {::this.renderLostTimeTable()}
+                    {::this.renderLagsTable(props.region.lagsDistribution)}
                   </GridItem>
                 </GridContainer>
             </React.Fragment>);

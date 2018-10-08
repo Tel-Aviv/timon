@@ -50,9 +50,9 @@ const headerStyle = theme => ({
     top: "8px"
   },
   primary: {
-    backgroundColor: primaryColor,
-    color: "#FFFFFF",
-    ...defaultBoxShadow
+    // backgroundColor: primaryColor,
+    // color: "#FFFFFF",
+    //...defaultBoxShadow
   },
   info: {
     backgroundColor: infoColor,
