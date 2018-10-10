@@ -3,8 +3,8 @@ import _ from 'lodash';
 import moment from 'moment';
 
 const INITIAL_STATE ={
-  fromDate: moment().add(-2, 'days'),
-  tillDate: moment().add(-1, 'days')
+  fromDate: '24/09/2018', //moment().add(-2, 'days'),
+  tillDate: '25/09/2018' //moment().add(-1, 'days')
 };
 
 const reducers = (state = INITIAL_STATE, action) => {

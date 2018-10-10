@@ -29,7 +29,7 @@ class RegionSummary extends React.Component<Props> {
 
         <Card>
           <CardHeader color={color} stats icon>
-            <CardIcon color={color} >
+            <CardIcon color={color}>
               {this.props.children}
             </CardIcon>
             <p className={classes.cardCategory}>{kind}</p>
@@ -43,7 +43,7 @@ class RegionSummary extends React.Component<Props> {
               <span style={{
                   lineHeight: '2.2'
                 }}>
-              7 cameras considered
+              {note}
               </span>
             </div>
           </CardFooter>

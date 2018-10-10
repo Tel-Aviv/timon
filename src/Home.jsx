@@ -35,10 +35,21 @@ const homeQuery = graphql`
                     $till: Date!)
   {
   	clusters {
+      id
       name
       clusterId
       ins (from: $from, till: $till)
       outs (from: $from, till: $till)
+
+      cameras {
+        id
+        cameraId
+        name
+        location {
+          lat
+          lon
+        }
+      }
 
       gates{
         id
@@ -47,6 +58,7 @@ const homeQuery = graphql`
         outs(from: $from, till: $till)
       }
     }
+
   }
   `;
 
@@ -86,6 +98,7 @@ class Home extends React.Component<Props, State> {
     } else if( props) {
 
         this.clustersData = props.clusters;
+        const cameras = _.flatten(props.clusters.map( cluster => cluster.cameras ));
 
         const tableData = [];
 
@@ -235,7 +248,9 @@ class Home extends React.Component<Props, State> {
                 </Card>
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
-                <Maps center={cityCenter}/>
+                <Maps center={cityCenter}
+                      zoom={12}
+                      cameras={cameras}/>
               </GridItem>
             </GridContainer>
 
@@ -249,8 +264,8 @@ class Home extends React.Component<Props, State> {
   render() {
 
     const queryVariables = {
-      from: '18/09/2018', // this.props.fromDate.format('DD/MM/YYYY'),
-      till: '19/09/2018' //this.props.tillDate.format('DD/MM/YYYY')
+      from: moment(this.props.fromDate, 'DD/MM/YYYY').format('DD/MM/YYYY'),
+      till: moment(this.props.tillDate, 'DD/MM/YYYY').format('DD/MM/YYYY')
     };
 
     return (<React.Fragment>

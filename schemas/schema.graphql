@@ -16,6 +16,7 @@ type Cluster implements INode {
   id: ID!
   name: String!
   clusterId: Int!
+  cameras: [Camera]
   ins(from: Date!, till: Date!): Int
   outs(from: Date!, till: Date!): Int
   gates: [Gate]

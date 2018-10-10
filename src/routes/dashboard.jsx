@@ -13,20 +13,20 @@ import Predictions from "../views/Predictions/Predictions";
 const dashboardRoutes = [
   {
     path: "/home",
-    sidebarName: "City",
+    sidebarName: "Tel-Aviv City",
     navbarName: "City",
     icon: Dashboard,
     component: Home
   }, {
     path: "/region/1",
-    sidebarName: "Region 1",
-    navbarName: "Region 1",
+    sidebarName: "Ibn Gvirol Area",
+    navbarName: "Ibn Gvirol Area",
     icon: LocationOn,
     component: Region
   }, {
     path: '/region/2',
-    sidebarName: "Region 2",
-    navbarName: "Region 2",
+    sidebarName: "Kaplan Area",
+    navbarName: "Kaplan Area",
     icon: LocationOn,
     component: Region
   }, {

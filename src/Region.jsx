@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import Loadable from 'react-loadable';
 import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ChartistGraph from "react-chartist";
@@ -34,6 +35,13 @@ import RaisedChart from './components/RaisedChart';
 import Maps from './views/Maps/Maps';
 
 import RegionSummary from './RegionSummary';
+import Lags from './components/Lags';
+
+const LagsComponent = Loadable({
+  loader: () => import('./components/Lags'),
+  loading: () => { return (<div>Loading...</div>) }
+});
+
 import dashboardStyle from "./assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 type Props = {
@@ -104,10 +112,7 @@ const summariesQuery = graphql`
         values
       }
 
-      lagsDistribution(from: $from, till: $till) {
-        labels
-        values
-      }
+      ...Lags_items @arguments(from: $from, till: $till)
 
       center {
         lat
@@ -128,9 +133,9 @@ const summariesQuery = graphql`
 
 class Region extends React.Component<Props> {
 
-  renderSummaries(data) {
+  renderSummaries(data, countCameras) {
 
-    const note = '3 cameras considered';
+    const note = `${countCameras} cameras considered`;
 
     return (
       <React.Fragment>
@@ -272,30 +277,6 @@ class Region extends React.Component<Props> {
 
   }
 
-  renderLagsTable(data) {
-
-    const tableData = [
-                        ['North', '00:44', '13%'],
-                        ['South', '01:21', '213%'],
-                        ['East', '00:24', '59%'],
-                        ['West', '00:57', '33%']
-                      ];
-
-    return (
-      <Card>
-        <CardHeader color="primary">
-          <div style={{textAlign: 'center'}}>Lost Time</div>
-        </CardHeader>
-        <CardBody>
-          <Table tableHeaderColor="primary"
-              tableHead={['Cluster', 'Lost Time', '%']}
-              tableData={tableData}
-          />
-        </CardBody>
-      </Card>
-    )
-  }
-
   renderRegion( {error, props} ) {
 
     if( error ) {
@@ -338,7 +319,8 @@ class Region extends React.Component<Props> {
       return (<React.Fragment>
                 <GridContainer>
 
-                    {::this.renderSummaries(props.region.summaries)}
+                    {::this.renderSummaries(props.region.summaries,
+                                            props.region.cameras.length)}
 
                 </GridContainer>
                 <GridContainer>
@@ -383,6 +365,7 @@ class Region extends React.Component<Props> {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
                       <Maps center={props.region.center}
+                            zoom={16}
                             cameras={props.region.cameras}/>
                     </GridItem>
                 </GridContainer>
@@ -394,7 +377,7 @@ class Region extends React.Component<Props> {
                     {::this.renderCommutesChart(props.region.commuteDistribution)}
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
-                    {::this.renderLagsTable(props.region.lagsDistribution)}
+                    <Lags items={props.region} />
                   </GridItem>
                 </GridContainer>
             </React.Fragment>);
@@ -411,9 +394,9 @@ class Region extends React.Component<Props> {
       directionIn: 'IN',
       directionOut: 'OUT',
       regionId: parseInt(this.props.match.params.regionid, 10),
-      weekFrom: '18/09/2018',
-      from: '24/09/2018', //moment().format('DD/MM/YYYY'),
-      till: '25/09/2018'
+      weekFrom: moment(this.props.fromDate, 'DD/MM/YYYY').add(-7, 'days').format('DD/MM/YYYY'),
+      from: this.props.fromDate,
+      till: this.props.tillDate
     };
 
     return (<React.Fragment>
