@@ -30,6 +30,7 @@ import CardFooter from "./components/CardFooter.jsx";
 import Danger from "./components/Danger.jsx";
 import Table from "./components/Table.jsx";
 import IconChart from './components/IconChart';
+import IconChartLegend from './components/IconChartLegend';
 import RaisedChart from './components/RaisedChart';
 
 import Maps from './views/Maps/Maps';
@@ -139,6 +140,7 @@ class Region extends React.Component<Props> {
 
     return (
       <React.Fragment>
+
         <GridItem xs={12} sm={6} md={3}>
           <RegionSummary classes={this.props.classes}
                      kind={'ENTRANCES'}
@@ -240,16 +242,72 @@ class Region extends React.Component<Props> {
     const chartType = 'Pie';
     const chartTille = 'Vehicle Types';
     const color = 'danger';
+    const options = {
+        labelInterpolationFnc: function(value) {
+          const total = chartData.series.reduce((a,b) => a + b);
+          const index = chartData.labels.findIndex( label => label === value );
+          return Math.round(chartData.series[index] / total * 100) + '%';
+        },
+        chartPadding: 0,
+        labelDirection: 'explode'
+    };
 
     return (
 
-        <RaisedChart classes={classes}
-                      type={chartType}
-                      data={chartData}
-                      title={chartTille}
-                      color={color} />
+        <IconChart classes={classes}
+                   type={chartType}
+                   data={chartData}
+                   title={chartTille}
+                   color={color}
+                   options={options}
+                   legend={
+                       <IconChartLegend data={chartData.labels} />
+                     }>
+              <PieChart style={{color: 'white'}} />
+        </IconChart>
       );
 
+  }
+
+  renderNomotorsDistributionChart() {
+
+    const {classes, ...rest } = this.props;
+    const chartData = {
+      labels: ['bikes', 'corkinets', 'horses', 'donkeys'],
+      series: [20, 15, 40, 23]
+    };
+
+    const chartTille = 'No Motor Vehicles';
+    const color = 'danger';
+    const chartType = 'Pie';
+
+    const options = {
+        labelInterpolationFnc: function(value) {
+          const total = chartData.series.reduce((a,b) => a + b);
+          const index = chartData.labels.findIndex( label => label === value );
+          return Math.round(chartData.series[index] / total * 100) + '%';
+        },
+        chartPadding: 0,
+        labelDirection: 'explode'
+    };
+
+    return (
+        <div>
+
+          <IconChart classes={classes}
+                     type={chartType}
+                     data={chartData}
+                     title={chartTille}
+                     color={color}
+                     options={options}
+                     legend={
+                       <IconChartLegend data={chartData.labels} />
+                     }>
+              <PieChart style={{color: 'white'}} />
+          </IconChart>
+
+        </div>
+    )
   }
 
   renderCommutesChart(data) {
@@ -263,15 +321,30 @@ class Region extends React.Component<Props> {
 
     const chartType = 'Pie';
     const chartTille = 'Commutes';
-    const color = 'success';
+    const color = 'danger';
+    const options = {
+        labelInterpolationFnc: function(value) {
+          const total = chartData.series.reduce((a,b) => a + b);
+          const index = chartData.labels.findIndex( label => label === value );
+          return Math.round(chartData.series[index] / total * 100) + '%';
+        },
+        labelOffset: 70,
+        chartPadding: 20,
+        labelDirection: 'explode'
+    };
+
 
     return (
         <IconChart classes={classes}
-                      type={chartType}
-                      data={chartData}
-                      title={chartTille}
-                      color={color}>
-            <PieChart />
+                    type={chartType}
+                    data={chartData}
+                    title={chartTille}
+                    color={color}
+                    options={options}
+                    legend={
+                       <IconChartLegend data={chartData.labels} />
+                    }>
+            <PieChart style={{color: 'white'}} />
         </IconChart>
     );
 
@@ -324,14 +397,20 @@ class Region extends React.Component<Props> {
 
                 </GridContainer>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     {::this.renderWeeklyDistributionChart(props.region.dayOfWeekDisrtibution)}
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     {::this.renderHourlyDistributionChart(props.region.hourlyDistribution)}
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                </GridContainer>
+
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
                     {::this.renderVehicleTypeDistributionChart(props.region.vehicleTypeDistribution)}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    {::this.renderNomotorsDistributionChart()}
                   </GridItem>
                 </GridContainer>
 

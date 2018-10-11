@@ -41,3 +41,40 @@ body {
   /* Create a dashed line with a pattern */
   /* stroke-dasharray: 10px 20px; */
 }
+
+.ct-series-a .ct-slice-pie {
+  fill: #029fd7
+}
+.pie-slice-1 {
+  fill: #029fd7
+}
+
+.ct-series-b .ct-slice-pie {
+  fill: #48a84b
+}
+.pie-slice-2 {
+  fill: #48a84b
+}
+
+.ct-series-c .ct-slice-pie {
+  flll: #ff9a00
+}
+.pie-slice-3 {
+  flll: #ff9a00
+}
+
+.ct-series-d .ct-slice-pie {
+  fill: #ec407a
+}
+.pie-slice-3 {
+  flll: #ec407a
+}
+
+.ct-chart-pie .ct-label {
+  color: rgba(0, 0, 0);
+  fill: rgba(0, 0, 0, 0.8);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.46429em;
+  dominant-baseline: central;
+}

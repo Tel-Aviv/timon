@@ -11,7 +11,6 @@ import Divider from '@material-ui/core/Divider';
 // Views
 import Maps from './views/Maps/Maps';
 import RegionSummary from './RegionSummary';
-import IconChart from './components/IconChart';
 // Icons
 import ArrowOut from "@material-ui/icons/ArrowUpward";
 import ArrowIn from "@material-ui/icons/ArrowDownward";
@@ -27,6 +26,8 @@ import CardBody from "./components/CardBody.jsx";
 import CardFooter from "./components/CardFooter.jsx";
 import Danger from "./components/Danger.jsx";
 import Table from "./components/Table.jsx";
+import IconChart from './components/IconChart';
+import IconChartLegend from './components/IconChartLegend';
 
 import dashboardStyle from "./assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
@@ -84,6 +85,78 @@ class Home extends React.Component<Props, State> {
     });
   }
 
+  renderCommutesChart(data) {
+
+    const chartData = {
+      //series: [[340, 209, 33]],
+      series: [52.7, 12.3, 7.00],
+      labels: ['First Time', 'Once At Month', 'Once At Week']
+    };
+    const chartTille = 'Commutes';
+    const options = {
+        labelInterpolationFnc: function(value) {
+          const total = chartData.series.reduce((a,b) => a + b);
+          const index = chartData.labels.findIndex( label => label === value );
+          return Math.round(chartData.series[index] / total * 100) + '%';
+        },
+        chartPadding: 0,
+        labelDirection: 'explode'
+    };
+    const chartType = 'Pie';
+    const color = 'danger';
+
+    return (
+        <IconChart classes={this.props.classes}
+                type={chartType}
+                data={chartData}
+                title={chartTille}
+                color={color}
+                options={options}
+                legend={
+                   <IconChartLegend data={chartData.labels} />
+                 }>
+            <PieChart style={{color: 'white'}}/>
+        </IconChart>
+    )
+
+  }
+
+  renderVehiclesChart(data) {
+
+    const chartData = {
+      //series: [[340, 209, 33]],
+      series: [340, 209, 33],
+      labels: ['cars', 'tracks', 'buses']
+    };
+
+    const chartType = 'Pie';
+    const chartTille = 'Vehicle Types';
+    const color = 'danger';
+    const options = {
+        labelInterpolationFnc: function(value) {
+          const total = chartData.series.reduce((a,b) => a + b);
+          const index = chartData.labels.findIndex( label => label === value );
+          return Math.round(chartData.series[index] / total * 100) + '%';
+        },
+        chartPadding: 0,
+        labelDirection: 'explode'
+    };
+
+    return (
+          <IconChart classes={this.props.classes}
+                  type={chartType}
+                  data={chartData}
+                  title={chartTille}
+                  color={color}
+                  options={options}
+                  legend={
+                     <IconChartLegend data={chartData.labels} />
+                   }>
+              <PieChart style={{color: 'white'}}/>
+          </IconChart>
+    )
+  }
+
   renderHome( {error, props} ) {
 
     if( error ) {
@@ -120,26 +193,7 @@ class Home extends React.Component<Props, State> {
         });
 
         const chartType = 'Pie';
-        const chartData = {
-          //series: [[340, 209, 33]],
-          series: [340, 209, 33],
-          labels: ['cars', 'tracks', 'buses']
-        };
 
-        const chartData2 = {
-          //series: [[340, 209, 33]],
-          series: [52.7, 12.3, 7.00],
-          labels: ['First Time', 'Once At Month', 'Once At Week']
-        };
-        // var options = {
-        //   high: 10,
-        //   low: -10,
-        //   axisX: {
-        //     labelInterpolationFnc: function(value, index) {
-        //       return index % 2 === 0 ? value : null;
-        //     }
-        //   }
-        // };
         let ClusterCamerasTable = null;
         if( this.state.showClusterCameras ) {
 
@@ -178,7 +232,7 @@ class Home extends React.Component<Props, State> {
         }
 
         const cityCenter = {lat:32.066667, lon:34.78333};
-        const summaryNote = '3 cameras considered';
+        const summaryNote = '9 cameras considered';
 
         return (
           <React.Fragment>
@@ -187,7 +241,7 @@ class Home extends React.Component<Props, State> {
                 <RegionSummary classes={this.props.classes}
                   kind={'ENTRANCES'}
                   value={'23.455'}
-                  color={'success'}
+                  color={'warning'}
                   units={'vehicles'}
                   note={summaryNote}>
                   <ArrowIn />
@@ -197,7 +251,7 @@ class Home extends React.Component<Props, State> {
                 <RegionSummary classes={this.props.classes}
                   kind={'EXITS'}
                   value={'564.490'}
-                  color={'success'}
+                  color={'info'}
                   units={'vehicles'}
                   note={summaryNote}>
                   <ArrowOut />
@@ -210,22 +264,10 @@ class Home extends React.Component<Props, State> {
             <GridContainer>
 
               <GridItem xs={12} sm={12} md={6}>
-                <IconChart classes={this.props.classes}
-                        type={chartType}
-                        data={chartData}
-                        title={'Vehicles'}
-                        color={'info'}>
-                    <PieChart />
-                </IconChart>
+                {::this.renderVehiclesChart()}
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
-                <IconChart classes={this.props.classes}
-                        type={chartType}
-                        data={chartData2}
-                        title={'Commutes'}
-                        color={'info'}>
-                    <PieChart />
-                </IconChart>
+                {::this.renderCommutesChart()}
               </GridItem>
 
             </GridContainer>

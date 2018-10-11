@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { QueryRenderer, graphql } from 'react-relay';
 import environment from './Environment';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 // Views
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -69,6 +70,7 @@ class MainLayout extends React.Component<Props, State> {
 
     return (
     <div className={classes.wrapper}>
+        <CssBaseline />
         {/*
         <QueryRenderer
           environment={environment}

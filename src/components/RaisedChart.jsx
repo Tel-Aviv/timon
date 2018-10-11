@@ -2,6 +2,7 @@
 import React from 'react';
 import ChartistGraph from "react-chartist";
 // core components
+import Typography from '@material-ui/core/Typography';
 import GridItem from "./GridItem.jsx";
 import Card from "./Card.jsx";
 import CardHeader from "./CardHeader.jsx";
@@ -35,9 +36,12 @@ class RaisedChart extends React.Component<Props> {
             />
         </CardHeader>
         <CardBody>
+            {/*
             <h4 className={classes.cardTitle}>{title}</h4>
-            <p className={classes.cardCategory}>
-            </p>
+            */}
+            <Typography component="h2">
+              {title}
+            </Typography>
         </CardBody>
       </Card>
     )

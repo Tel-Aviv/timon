@@ -31,10 +31,6 @@ var config = {
         exclude: /node_modules/
       },
       {
-        test: /\.json$/,
-        loader: 'json-loader'
-      },
-      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
       },
