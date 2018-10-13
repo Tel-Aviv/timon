@@ -2,7 +2,21 @@
   "version": "v1",
   "config": {
     "visState": {
-      "filters": [],
+      "filters": [
+        {
+          "dataId": "my_data",
+          "id": "09vn5a0of",
+          "name": "tpep_pickup_datetime",
+          "type": "timeRange",
+          "value": [
+            1421300098000,
+            1421352890000
+          ],
+          "enlarged": true,
+          "plotType": "histogram",
+          "yAxis": null
+        }
+      ],
       "layers": [
         {
           "id": "6vcue0g",

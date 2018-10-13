@@ -1,22 +1,37 @@
 // @flow
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import KeplerGl from 'kepler.gl';
 // Kepler.gl actions
-import {addDataToMap} from 'kepler.gl/actions';
+import { addDataToMap, forwardTo } from 'kepler.gl/actions';
 // Kepler.gl Data processing APIs
 import Processors from 'kepler.gl/processors';
+import { injectComponents, PanelHeaderFactory } from 'kepler.gl/components';
 
 // Sample data
-import tlvTrips from '../data/tlv-trips.csv';
+//import tlvTrips from '../data/tlv-trips.csv';
 import tlvConfig from '../data/tlv-config.json';
 
 const MAPBOX_TOKEN = process.env.MapboxAccessToken;
 
+// define custom header
+// const CustomHeader = () => (<div></div>);
+// const myCustomHeaderFactory = () => CustomHeader;
+//
+// // Inject custom header into Kepler.gl, replacing default
+// const KeplerGl = injectComponents([
+//   [PanelHeaderFactory, myCustomHeaderFactory]
+// ]);
+
 class DataVis extends React.Component<{}> {
 
-  componentDidMount() {
+  async componentDidMount() {
+
+    const resp = await fetch('http://localhost:4000/data/tlv-trips.csv');
+    const tlvTrips = await resp.text();
+    console.log(tlvTrips);
+
     const data = Processors.processCsvData(tlvTrips);
 
     // Create dataset structure
@@ -31,8 +46,13 @@ class DataVis extends React.Component<{}> {
     };
 
     // addDataToMap action to inject dataset into kepler.gl instance
-    this.props.dispatch(addDataToMap({
+    this.props.keplerGlDispatch(addDataToMap({
+    //this.props.dispatch(addDataToMap({
                                       datasets: dataset,
+                                      options: {
+                                        centerMap: true,
+                                        readOnly: false
+                                      },
                                       config: tlvConfig
                                     })
                       );
@@ -66,6 +86,9 @@ class DataVis extends React.Component<{}> {
 };
 
 const mapStateToProps = state => state;
-const dispatchToProps = dispatch => ({dispatch});
+const dispatchToProps = (dispatch, props) => ({
+  dispatch,
+  keplerGlDispatch: forwardTo('map', dispatch)
+});
 
 export default connect(mapStateToProps, dispatchToProps)(DataVis);
