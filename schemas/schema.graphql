@@ -60,6 +60,7 @@ type Query {
   regions: [Region]
   clusters: [Cluster]
   cluster(clusterId: Int!): Cluster
+  keplerDataUrl(from: Date!, till: Date!): String
 }
 
 type Region implements INode {

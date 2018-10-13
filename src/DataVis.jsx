@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { fetchQuery, graphql } from 'react-relay';
+import environment from './Environment';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import KeplerGl from 'kepler.gl';
 // Kepler.gl actions
@@ -9,8 +11,6 @@ import { addDataToMap, forwardTo } from 'kepler.gl/actions';
 import Processors from 'kepler.gl/processors';
 import { injectComponents, PanelHeaderFactory } from 'kepler.gl/components';
 
-// Sample data
-//import tlvTrips from '../data/tlv-trips.csv';
 import tlvConfig from '../data/tlv-config.json';
 
 const MAPBOX_TOKEN = process.env.MapboxAccessToken;
@@ -24,11 +24,32 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken;
 //   [PanelHeaderFactory, myCustomHeaderFactory]
 // ]);
 
-class DataVis extends React.Component<{}> {
+const keplerQuery = graphql`
+  query DataVis_Query($from: Date!,
+                      $till: Date!) {
+      keplerDataUrl(from: $from, till: $till)
+  }
+`;
+
+type Props = {
+  app: {
+    fromDate: Date,
+    tillDate: Date
+  }
+}
+
+class DataVis extends React.Component<Props> {
 
   async componentDidMount() {
 
-    const resp = await fetch('http://localhost:4000/data/tlv-trips.csv');
+    const queryVariables = {
+      from: this.props.app.fromDate,
+      till: this.props.app.tillDate
+    };
+
+    const gqlData = await fetchQuery(environment, keplerQuery, queryVariables);
+
+    const resp = await fetch(gqlData.keplerDataUrl);
     const tlvTrips = await resp.text();
     console.log(tlvTrips);
 
