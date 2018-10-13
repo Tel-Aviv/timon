@@ -8,6 +8,7 @@ import PredictionsIcon from "@material-ui/icons/FlipSharp";
 import Region from '../Region';
 import Home from '../Home';
 import Cameras from "../Cameras";
+import DataVis from '../DataVis';
 import Predictions from "../views/Predictions/Predictions";
 
 const dashboardRoutes = [
@@ -30,6 +31,12 @@ const dashboardRoutes = [
     icon: LocationOn,
     component: Region
   }, {
+    path: "/vis",
+    sidebarName: "Visualization",
+    navbarName: "Visualization",
+    icon: BubbleChart,
+    component: DataVis
+  },{
     path: "/cameras",
     sidebarName: "Cameras",
     navbarName: "Cameras",

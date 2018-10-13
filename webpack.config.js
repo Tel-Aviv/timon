@@ -1,4 +1,5 @@
 var path = require('path');
+const webpack = require('webpack');
 
 var jsName = 'bundle.js';
 
@@ -54,7 +55,12 @@ var config = {
   },
   node: {
    fs: "empty"
-  }
+  },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      MapboxAccessToken: 'pk.eyJ1Ijoib2xlZ2tsZWltYW4iLCJhIjoiY2puM251bDk1Mmc2djNrcWxlYWU2MWY4NyJ9.vyNX_-c-ax1erGoOkAuH0g'
+    })
+  ]
 
 };
 

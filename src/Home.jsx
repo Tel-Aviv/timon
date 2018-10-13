@@ -323,8 +323,8 @@ class Home extends React.Component<Props, State> {
 
 const mapStateToProps = state => {
   return {
-    fromDate: state.fromDate,
-    tillDate: state.tillDate
+    fromDate: state.app.fromDate,
+    tillDate: state.app.tillDate
   }
 }
 

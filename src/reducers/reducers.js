@@ -1,4 +1,7 @@
 // @flow
+import keplerGlReducer from 'kepler.gl/reducers';
+import { combineReducers } from 'redux';
+import { handleActions } from 'redux-actions';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -7,7 +10,7 @@ const INITIAL_STATE ={
   tillDate: '25/09/2018' //moment().add(-1, 'days')
 };
 
-const reducers = (state = INITIAL_STATE, action) => {
+const reducer = (state = INITIAL_STATE, action) => {
 
   switch( action.type ) {
 
@@ -33,5 +36,25 @@ const reducers = (state = INITIAL_STATE, action) => {
 
   return state;
 }
+
+// const reducer = handleActions({
+//
+// }, INITIAL_STATE);
+
+// const reducer = handleActions(
+//   {
+//     [increment]: state => ({ ...state, fromDate: _.assign({}, state, {
+//                                                               fromDate: action.data.date
+//                                                             })
+//    }),
+//     [decrement]: state => ({ ...state, counter: state.counter - 1 })
+//   },
+//   defaultState
+// );
+
+const reducers = combineReducers({
+  keplerGl: keplerGlReducer,
+  app: reducer
+});
 
 export default reducers;

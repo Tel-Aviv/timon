@@ -11,6 +11,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Region from './Region';
 import Home from './Home';
+import DataVis from './DataVis';
 import Predictions from './views/Predictions/Predictions';
 // Styles
 import dashboardStyle from "./assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
@@ -96,6 +97,7 @@ class MainLayout extends React.Component<Props, State> {
             <Switch>
               <Route path='/region/:regionid' component={Region} />
               <Route path='/home' component={Home} />
+              <Route path='/vis' component={DataVis} />
               <Route path='/predictions' component={Predictions} />
             </Switch>
           </div>

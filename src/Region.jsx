@@ -493,8 +493,8 @@ class Region extends React.Component<Props> {
 
 const mapStateToProps = state => {
   return {
-    fromDate: state.fromDate,
-    tillDate: state.tillDate
+    fromDate: state.app.fromDate,
+    tillDate: state.app.tillDate
   }
 }
 
