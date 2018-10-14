@@ -6,7 +6,7 @@
         {
           "dataId": "my_data",
           "id": "09vn5a0of",
-          "name": "tpep_pickup_datetime",
+          "name": "snap_datetime",
           "type": "timeRange",
           "value": [
             1421300098000,
@@ -23,15 +23,15 @@
           "type": "point",
           "config": {
             "dataId": "my_data",
-            "label": "pickup",
+            "label": "first snap",
             "color": [
               18,
               147,
               154
             ],
             "columns": {
-              "lat": "pickup_latitude",
-              "lng": "pickup_longitude",
+              "lat": "first_camera_lat",
+              "lng": "first_camera_lon",
               "altitude": null
             },
             "isVisible": true,
@@ -76,15 +76,15 @@
           "type": "point",
           "config": {
             "dataId": "my_data",
-            "label": "dropoff",
+            "label": "last snap",
             "color": [
               221,
               178,
               124
             ],
             "columns": {
-              "lat": "dropoff_latitude",
-              "lng": "dropoff_longitude",
+              "lat": "second_camera_lat",
+              "lng": "second_camera_lon",
               "altitude": null
             },
             "isVisible": true,
@@ -126,17 +126,17 @@
           "type": "arc",
           "config": {
             "dataId": "my_data",
-            "label": "pickup -> dropoff arc",
+            "label": "first -> last arc",
             "color": [
               146,
               38,
               198
             ],
             "columns": {
-              "lat0": "pickup_latitude",
-              "lng0": "pickup_longitude",
-              "lat1": "dropoff_latitude",
-              "lng1": "dropoff_longitude"
+              "lat0": "first_camera_lat",
+              "lng0": "first_camera_lon",
+              "lat1": "second_camera_lat",
+              "lng1": "second_camera_lon"
             },
             "isVisible": true,
             "visConfig": {
@@ -175,17 +175,17 @@
           "type": "line",
           "config": {
             "dataId": "my_data",
-            "label": "pickup -> dropoff line",
+            "label": "first -> last line",
             "color": [
               136,
               87,
               44
             ],
             "columns": {
-              "lat0": "pickup_latitude",
-              "lng0": "pickup_longitude",
-              "lat1": "dropoff_latitude",
-              "lng1": "dropoff_longitude"
+              "lat0": "first_camera_lat",
+              "lng0": "first_camera_lon",
+              "lat1": "second_camera_lat",
+              "lng1": "second_camera_lon"
             },
             "isVisible": false,
             "visConfig": {

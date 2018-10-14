@@ -47,6 +47,7 @@ class DataVis extends React.Component<Props> {
       till: this.props.app.tillDate
     };
 
+    try {
     const gqlData = await fetchQuery(environment, keplerQuery, queryVariables);
 
     const resp = await fetch(gqlData.keplerDataUrl);
@@ -77,6 +78,9 @@ class DataVis extends React.Component<Props> {
                                       config: tlvConfig
                                     })
                       );
+    } catch( err ) {
+        console.log(err);
+    }
 
     // Test
     // retrieve kepler.gl store
