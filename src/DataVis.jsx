@@ -48,45 +48,40 @@ class DataVis extends React.Component<Props> {
     };
 
     try {
-    const gqlData = await fetchQuery(environment, keplerQuery, queryVariables);
 
-    const resp = await fetch(gqlData.keplerDataUrl);
-    const tlvTrips = await resp.text();
-    console.log(tlvTrips);
+      const gqlData = await fetchQuery(environment, keplerQuery, queryVariables);
 
-    const data = Processors.processCsvData(tlvTrips);
+      const resp = await fetch(gqlData.keplerDataUrl);
+      const tlvTrips = await resp.text();
+      //console.log(tlvTrips);
 
-    // Create dataset structure
-    const dataset = {
-      data,
+      const data = Processors.processCsvData(tlvTrips);
 
-      info: {
-        // `info` property are optional, adding an `id` associate with this dataset makes it easier
-        // to replace it later
-        id: 'my_data'
-      }
-    };
+      // Create dataset structure
+      const dataset = {
+        data,
 
-    // addDataToMap action to inject dataset into kepler.gl instance
-    this.props.keplerGlDispatch(addDataToMap({
-    //this.props.dispatch(addDataToMap({
-                                      datasets: dataset,
-                                      options: {
-                                        centerMap: true,
-                                        readOnly: false
-                                      },
-                                      config: tlvConfig
-                                    })
-                      );
+        info: {
+          // `info` property are optional, adding an `id` associate with this dataset makes it easier
+          // to replace it later
+          id: 'my_data'
+        }
+      };
+
+      // addDataToMap action to inject dataset into kepler.gl instance
+      this.props.keplerGlDispatch(addDataToMap({
+      //this.props.dispatch(addDataToMap({
+                                        datasets: dataset,
+                                        options: {
+                                          centerMap: true,
+                                          readOnly: false
+                                        },
+                                        config: tlvConfig
+                                      })
+                        );
     } catch( err ) {
         console.log(err);
     }
-
-    // Test
-    // retrieve kepler.gl store
-    const {keplerGl} = this.props;
-    // retrieve current kepler.gl instance store
-    const {map} = keplerGl;
 
   }
 
