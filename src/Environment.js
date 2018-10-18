@@ -27,6 +27,7 @@ async function fetchQuery(operation, variables = {}, cacheConfig) {
     headers: {
        'Accept':'application/json',
        'Content-Type': 'application/json',
+       "Authorization": "Basic dGltb246MzE2NDk3Kjk="
     },
     body: JSON.stringify({
       query: operation.text,

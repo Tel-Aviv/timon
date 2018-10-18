@@ -7819,7 +7819,7 @@ react-virtualized@^9.20.1:
     prop-types "^15.6.0"
     react-lifecycles-compat "^3.0.4"
 
-react-vis@^1.8.0:
+react-vis@^1.11.2, react-vis@^1.8.0:
   version "1.11.2"
   resolved "https://registry.yarnpkg.com/react-vis/-/react-vis-1.11.2.tgz#706a56a78723a15a0b6f5823f8a33ade3d41d35d"
   integrity sha512-9OAhIxPq7+QDVKOwZqUgjfNOxNVYRU9Uuo2PV2ANPjTdCV07uh1wkOcw5+GLb+0PvFzEjKDumynmku1V4kgNbg==

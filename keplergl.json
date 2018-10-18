@@ -9,17 +9,30 @@
           "name": "snap_datetime",
           "type": "timeRange",
           "value": [
-            1421300098000,
-            1421352890000
+            1537748483553.3335,
+            1537753332553.3337
           ],
           "enlarged": true,
+          "plotType": "histogram",
+          "yAxis": null
+        },
+        {
+          "dataId": "my_data",
+          "id": "bik2rncer",
+          "name": "first_camera_id",
+          "type": "range",
+          "value": [
+            99010,
+            99028.8
+          ],
+          "enlarged": false,
           "plotType": "histogram",
           "yAxis": null
         }
       ],
       "layers": [
         {
-          "id": "6vcue0g",
+          "id": "yyywk31",
           "type": "point",
           "config": {
             "dataId": "my_data",
@@ -27,7 +40,8 @@
             "color": [
               18,
               147,
-              154
+              154,
+              255
             ],
             "columns": {
               "lat": "first_camera_lat",
@@ -59,13 +73,24 @@
                 50
               ],
               "hi-precision": false
+            },
+            "textLabel": {
+              "field": null,
+              "color": [
+                255,
+                255,
+                255
+              ],
+              "size": 50,
+              "offset": [
+                0,
+                0
+              ],
+              "anchor": "middle"
             }
           },
           "visualChannels": {
-            "colorField": {
-              "name": "trip_distance",
-              "type": "real"
-            },
+            "colorField": null,
             "colorScale": "quantile",
             "sizeField": null,
             "sizeScale": "linear"
@@ -80,7 +105,8 @@
             "color": [
               221,
               178,
-              124
+              124,
+              255
             ],
             "columns": {
               "lat": "second_camera_lat",
@@ -112,6 +138,20 @@
                 50
               ],
               "hi-precision": false
+            },
+            "textLabel": {
+              "field": null,
+              "color": [
+                255,
+                255,
+                255
+              ],
+              "size": 50,
+              "offset": [
+                0,
+                0
+              ],
+              "anchor": "middle"
             }
           },
           "visualChannels": {
@@ -142,7 +182,7 @@
             "isVisible": true,
             "visConfig": {
               "opacity": 0.8,
-              "thickness": 2,
+              "thickness": 0.8,
               "colorRange": {
                 "name": "Ice And Fire",
                 "type": "diverging",
@@ -163,6 +203,20 @@
               ],
               "targetColor": null,
               "hi-precision": false
+            },
+            "textLabel": {
+              "field": null,
+              "color": [
+                255,
+                255,
+                255
+              ],
+              "size": 50,
+              "offset": [
+                0,
+                0
+              ],
+              "anchor": "middle"
             }
           },
           "visualChannels": {
@@ -184,7 +238,8 @@
             "color": [
               136,
               87,
-              44
+              44,
+              255
             ],
             "columns": {
               "lat0": "first_camera_lat",
@@ -215,6 +270,20 @@
               ],
               "targetColor": null,
               "hi-precision": false
+            },
+            "textLabel": {
+              "field": null,
+              "color": [
+                255,
+                255,
+                255
+              ],
+              "size": 50,
+              "offset": [
+                0,
+                0
+              ],
+              "anchor": "middle"
             }
           },
           "visualChannels": {
@@ -229,11 +298,11 @@
         "tooltip": {
           "fieldsToShow": {
             "my_data": [
-              "VendorID",
-              "tpep_pickup_datetime",
-              "tpep_dropoff_datetime",
-              "passenger_count",
-              "trip_distance"
+              "first_camera_id",
+              "snap_datetime",
+              "second_camera_id",
+              "snap2_datetime",
+              "vehicle_type"
             ]
           },
           "enabled": true
@@ -247,12 +316,12 @@
       "splitMaps": []
     },
     "mapState": {
-      "bearing": 0,
-      "dragRotate": false,
-      "latitude": 32.06666,
-      "longitude":  34.783333,
-      "pitch": 1,
-      "zoom": 12,
+      "bearing": 24,
+      "dragRotate": true,
+      "latitude": 32.070124433550134,
+      "longitude": 34.775961229084295,
+      "pitch": 50,
+      "zoom": 12.850274816802791,
       "isSplit": false
     },
     "mapStyle": {

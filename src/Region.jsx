@@ -273,8 +273,8 @@ class Region extends React.Component<Props> {
 
     const {classes, ...rest } = this.props;
     const chartData = {
-      labels: ['bikes', 'corkinets', 'horses', 'donkeys'],
-      series: [20, 15, 40, 23]
+      labels: ['bikes', 'corkinets', 'others'],
+      series: [20, 15, 40]
     };
 
     const chartTille = 'No Motor Vehicles';

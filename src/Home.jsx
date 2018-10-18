@@ -28,6 +28,7 @@ import Danger from "./components/Danger.jsx";
 import Table from "./components/Table.jsx";
 import IconChart from './components/IconChart';
 import IconChartLegend from './components/IconChartLegend';
+import VisChart from './components/VisChart';
 
 import dashboardStyle from "./assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
@@ -66,14 +67,16 @@ const homeQuery = graphql`
 type State = {
   showClusterCameras: boolean,
   clusterName: String,
-  clusterId: number
+  clusterId: number,
+  value: boolean
 }
 
 class Home extends React.Component<Props, State> {
 
   state = {
     showClusterCameras: false,
-    clusterName: ''
+    clusterName: '',
+    value: false
   }
 
   tableRowClicked = (rowData) => {
@@ -86,6 +89,24 @@ class Home extends React.Component<Props, State> {
   }
 
   renderCommutesChart(data) {
+
+    // const chartData =
+    // [
+    //   {angle: 52.7, color: '#029fd7', radius: 10, label: 'First Time'},
+    //   {angle: 12.3, color: '#48a84b', radius: 20, label: 'Once At Month'},
+    //   {angle: 7.00, color: '#ff9a00', radius: 5, label: 'Once At Week'},
+    // ];
+    // const chartTille = 'Commutes';
+    // const color = 'danger';
+    //
+    // return (
+    //         <VisChart classes={this.props.classes}
+    //                   data={chartData}
+    //                   title={chartTille}
+    //                   color={color}>
+    //             <PieChart style={{color: 'white'}}/>
+    //         </VisChart>
+    //       )
 
     const chartData = {
       //series: [[340, 209, 33]],

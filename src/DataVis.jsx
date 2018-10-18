@@ -16,10 +16,10 @@ import tlvConfig from '../data/tlv-config.json';
 const MAPBOX_TOKEN = process.env.MapboxAccessToken;
 
 // define custom header
-// const CustomHeader = () => (<div></div>);
-// const myCustomHeaderFactory = () => CustomHeader;
-//
-// // Inject custom header into Kepler.gl, replacing default
+const CustomHeader = () => (<div></div>);
+const myCustomHeaderFactory = () => CustomHeader;
+
+// Inject custom header into Kepler.gl, replacing default
 // const KeplerGl = injectComponents([
 //   [PanelHeaderFactory, myCustomHeaderFactory]
 // ]);

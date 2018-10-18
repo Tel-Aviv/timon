@@ -5,7 +5,6 @@ import ChartistGraph from "react-chartist";
 import Icon from "@material-ui/core/Icon";
 import Typography from '@material-ui/core/Typography';
 
-import GridItem from "./GridItem.jsx";
 import Card from "./Card.jsx";
 import CardHeader from "./CardHeader.jsx";
 import CardIcon from "./CardIcon.jsx";
