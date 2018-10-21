@@ -397,10 +397,10 @@ class Region extends React.Component<Props> {
 
                 </GridContainer>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={4}>
                     {::this.renderWeeklyDistributionChart(props.region.dayOfWeekDisrtibution)}
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={8}>
                     {::this.renderHourlyDistributionChart(props.region.hourlyDistribution)}
                   </GridItem>
                 </GridContainer>
