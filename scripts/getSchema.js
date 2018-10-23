@@ -8,7 +8,7 @@ import {
 } from 'graphql/utilities';
 
 const log = console.log;
-const errror = console.error;
+const error = console.error;
 
 const usage = ` Usage: getSchema ENDPOINT_URL > schema.graphql`;
 
@@ -21,19 +21,25 @@ async function main() {
 
   const endpoint = argv._[0]
 
-  fetch(endpoint, {
+  const res = await fetch(endpoint, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      "Authorization": "Basic dGltb246MzE2NDk3Kjk="
     },
     body: JSON.stringify({ 'query': introspectionQuery }),
-  })
-  .then(res => res.json())
-    .then(res => {
-      const schemaString = printSchema(buildClientSchema(res.data));
-      log( schemaString );
+  });
+  const _res = await res.json();
+  if( _res.errors ) {
+    _res.errors.map( _error => {
+      error(chalk.red(_error.message));
+      process.exitCode = 1;
     });
+  } else {
+    const schemaString = printSchema(buildClientSchema(_res.data));
+    log( schemaString );
+  }
 }
 
 main().catch( e => error(e) );
