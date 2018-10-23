@@ -31,6 +31,7 @@ import Danger from "./components/Danger.jsx";
 import Table from "./components/Table.jsx";
 import IconChart from './components/IconChart';
 import IconChartLegend from './components/IconChartLegend';
+import IconlessChartLegend from './components/IconlessChartLegend';
 import RaisedChart from './components/RaisedChart';
 
 import Maps from './views/Maps/Maps';
@@ -156,7 +157,7 @@ class Region extends React.Component<Props> {
           <RegionSummary classes={this.props.classes}
                      kind={'EXITS'}
                      value={data[1].value}
-                     color={'info'}
+                     color={'rose'}
                      units={'vehicles'}
                      note={note}>
               <ArrowIn />
@@ -167,7 +168,7 @@ class Region extends React.Component<Props> {
           <RegionSummary classes={this.props.classes}
                      kind={'CROSS'}
                      value={data[2].value}
-                     color={'rose'}
+                     color={'info'}
                      units={'vehicles'}
                      note={note}>
               <CrossIcon />
@@ -197,15 +198,18 @@ class Region extends React.Component<Props> {
     };
     const chartType = 'Bar';
     const chartTille = 'Weekly Distribution';
-    const color = 'success';
+    const color = 'info';
 
     return (
         <RaisedChart classes={classes}
                       type={chartType}
                       data={chartData}
                       title={chartTille}
-                      color={color} />
-      );
+                      color={color}
+                      legend={
+                           <IconlessChartLegend data={['in', 'out']} />
+                         }/>
+          );
 
   }
 
@@ -219,7 +223,7 @@ class Region extends React.Component<Props> {
 
     const chartType = 'Bar';
     const chartTille = 'Hourly Distribution';
-    const color = 'warning';
+    const color = 'info';
 
     return (
 
@@ -227,7 +231,11 @@ class Region extends React.Component<Props> {
                       type={chartType}
                       data={chartData}
                       title={chartTille}
-                      color={color}  />
+                      color={color}
+                      legend={
+                           <IconlessChartLegend data={['in', 'out']} />
+                         }>
+        </RaisedChart>
         );
   }
 
@@ -473,7 +481,7 @@ class Region extends React.Component<Props> {
       directionIn: 'IN',
       directionOut: 'OUT',
       regionId: parseInt(this.props.match.params.regionid, 10),
-      weekFrom: moment(this.props.fromDate, 'DD/MM/YYYY').add(-7, 'days').format('DD/MM/YYYY'),
+      weekFrom: moment(this.props.fromDate, 'DD/MM/YYYY').add(-6, 'days').format('DD/MM/YYYY'),
       from: this.props.fromDate,
       till: this.props.tillDate
     };

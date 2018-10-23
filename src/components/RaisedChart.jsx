@@ -17,7 +17,8 @@ type Props = {
   type: String,
   data: [],
   title: String,
-  color: String
+  color: String,
+  legend: any
 }
 
 class RaisedChart extends React.Component<Props> {
@@ -39,9 +40,16 @@ class RaisedChart extends React.Component<Props> {
             {/*
             <h4 className={classes.cardTitle}>{title}</h4>
             */}
-            <Typography component="h2">
+            <h2>
               {title}
+            </h2>
+            <Typography component="h3" gutterBottom
+              style={{
+                  float: "left"
+                }}>
+              {this.props.legend}
             </Typography>
+
         </CardBody>
       </Card>
     )

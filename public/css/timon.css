@@ -1,6 +1,6 @@
 body {
     font-family: "Arimo", "Rubik","Roboto", "Helvetica", "Arial", sans-serif;
-    background: #eee;
+    background: #eee !important;
     font-weight: 300;
     line-height: 1.5em;
 }
@@ -35,11 +35,16 @@ body {
 
 .ct-series-a .ct-bar {
   /* Set the colour of this series line */
-  stroke: white;
+  stroke: #fb8c00;
   /* Control the thikness of your lines */
   stroke-width: 5px;
   /* Create a dashed line with a pattern */
   /* stroke-dasharray: 10px 20px; */
+}
+
+.ct-series-b .ct-bar {
+  stroke: #ec407a;
+  stroke-width: 5px;
 }
 
 .ct-series-a .ct-slice-pie {
@@ -77,4 +82,11 @@ body {
   font-weight: 400;
   line-height: 1.46429em;
   dominant-baseline: central;
+}
+
+.ct-chart-bar .ct-label {
+  color: rgba(0, 0, 0);
+  fill: rgba(0, 0, 0, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.46429em;
 }

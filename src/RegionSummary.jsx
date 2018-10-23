@@ -32,7 +32,9 @@ class RegionSummary extends React.Component<Props> {
             <CardIcon color={color}>
               {this.props.children}
             </CardIcon>
-            <p className={classes.cardCategory}>{kind}</p>
+            <h2 className={classes.cardCategory} style={{
+                color: 'black'
+              }}>{kind}</h2>
             <h3 className={classes.cardTitle}>
               {this.props.value} <small>{units}</small>
             </h3>

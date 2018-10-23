@@ -42,7 +42,7 @@ class IconChart extends React.Component<Props> {
         <CardIcon color={color}>
           {this.props.children}
         </CardIcon>
-        <div>{title}</div>
+        <h2>{title}</h2>
       </CardHeader>
       <CardBody>
         <ChartistGraph className="ct-octave" data={data} type={type} options={options}/>
