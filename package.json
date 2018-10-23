@@ -39,6 +39,7 @@
     "babel-preset-react": "^6.24.1",
     "chartist": "^0.11.0",
     "express": "^4.16.3",
+    "fetch-progress": "^1.0.2",
     "file-loader": "^2.0.0",
     "kepler.gl": "^0.1.6",
     "moment": "^2.22.2",
@@ -58,9 +59,11 @@
     "recompose": "^0.30.0",
     "redux": "^4.0.0",
     "redux-actions": "^2.6.1",
+    "terminal-kit": "^1.26.4",
     "url-loader": "^1.1.1"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "babel-plugin-inline-json-import": "^0.3.1",
     "babel-plugin-relay": "^1.6.2",
     "css-loader": "^1.0.0",

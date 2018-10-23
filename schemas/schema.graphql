@@ -22,6 +22,7 @@ type Cluster implements INode {
   gates: [Gate]
 }
 
+"""Date custom scalar type"""
 scalar Date
 
 enum Direction {

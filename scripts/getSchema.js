@@ -1,6 +1,7 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 var argv = require('minimist')(process.argv.slice(2));
 import chalk from 'chalk';
+var term = require( 'terminal-kit' ).terminal;
 import {
   buildClientSchema,
   introspectionQuery,
@@ -21,25 +22,30 @@ async function main() {
 
   const endpoint = argv._[0]
 
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      "Authorization": "Basic dGltb246MzE2NDk3Kjk="
-    },
-    body: JSON.stringify({ 'query': introspectionQuery }),
-  });
-  const _res = await res.json();
-  if( _res.errors ) {
-    _res.errors.map( _error => {
-      error(chalk.red(_error.message));
-      process.exitCode = 1;
-    });
-  } else {
-    const schemaString = printSchema(buildClientSchema(_res.data));
-    log( schemaString );
-  }
+  const res = await axios.post(endpoint,
+    JSON.stringify({ 'query': introspectionQuery }),
+    {
+      headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      responseType: 'json',
+      auth: {
+          username: 'timon',
+          password: '316497*9'
+      }
+    }
+  );
+
+  const schemaString = printSchema(buildClientSchema(res.data.data));
+  log( schemaString );
 }
 
-main().catch( e => error(e) );
+main().catch( e => {
+
+  e.response.data.errors.map( _error => {
+    error(_error.message);
+  });
+  process.exitCode = 1;
+
+});
