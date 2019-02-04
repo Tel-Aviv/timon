@@ -22,7 +22,8 @@ async function fetchQuery(operation, variables = {}, cacheConfig) {
     return cachedData;
   }
 
-  return fetch('http://localhost:4000', {
+  // return fetch('http://localhost:4000', {
+return fetch('https://zbeegqlserver.azurewebsites.net', {
     method: 'POST',
     headers: {
        'Accept':'application/json',
